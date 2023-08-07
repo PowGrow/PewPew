@@ -1,6 +1,5 @@
 ﻿using Pewpew.Infrastructure;
 using Pewpew.Services.Inputs;
-using System;
 
 public class BootstrapState : IState
 {
@@ -27,7 +26,7 @@ public class BootstrapState : IState
 
     private static IInputService RegisterInputService()
     {
-        throw new NotImplementedException(); ;
+        return new StandaloneInputService();
     }
 }
 

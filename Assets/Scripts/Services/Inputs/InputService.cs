@@ -12,20 +12,4 @@ namespace Pewpew.Services.Inputs
 
         public abstract bool IsAttackButtonUp();
     }
-
-    public class StandaloneInputService: InputService
-    {
-        public override Vector2 Axis
-        {
-            get 
-            { 
-                return new Vector2(Input.GetAxis(Horizontal), Input.GetAxis(Vertical);
-            }
-        }
-
-        public override bool IsAttackButtonUp()
-        {
-            return Input.GetButtonUp(FireButton);
-        }
-    }
 }

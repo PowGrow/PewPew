@@ -10,6 +10,7 @@ namespace Pewpew.Infrastructure
         public Game()
         {
             StateMachine = new GameStateMachine();
+            StateMachine.Enter<BootstrapState>();
         }
     }
 }
