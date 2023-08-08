@@ -1,4 +1,5 @@
-using Pewpew.Services.Inputs;
+using Pewpew.Infrastructure.Services;
+using Pewpew.Infrastructure.States;
 
 namespace Pewpew.Infrastructure
 {
@@ -6,10 +7,9 @@ namespace Pewpew.Infrastructure
     {
         public GameStateMachine StateMachine;
 
-        public static IInputService InputService { get; set; }
         public Game(ICoroutineRunner coroutineRunner, LoadingCurtain curtain)
         {
-            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), curtain);
+            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), curtain, AllServices.Container);
         }
     }
 }

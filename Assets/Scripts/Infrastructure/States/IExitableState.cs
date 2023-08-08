@@ -1,4 +1,4 @@
-﻿namespace Pewpew.Infrastructure
+﻿namespace Pewpew.Infrastructure.States
 {
     public interface IExitableState
     {

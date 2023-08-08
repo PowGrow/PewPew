@@ -1,7 +1,9 @@
 using Pewpew.Infrastructure;
+using Pewpew.Infrastructure.Services;
 using Pewpew.Services.Inputs;
 using Pewpew.Utils;
 using UnityEngine;
+using UnityEngine.Windows;
 
 namespace Pewpew.Player
 {
@@ -17,7 +19,7 @@ namespace Pewpew.Player
 
         private void Awake()
         {
-            _inputService = Game.InputService;
+            _inputService = AllServices.Container.Single<IInputService>();
         }
 
         private void Start()

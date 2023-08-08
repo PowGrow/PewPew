@@ -1,21 +1,23 @@
-﻿using UnityEngine;
+﻿using Pewpew.Infrastructure.Factory;
+using UnityEngine;
 
-namespace Pewpew.Infrastructure
+namespace Pewpew.Infrastructure.States
 {
     internal class LoadLevelState : IPayloadedState<string>
     {
         private const string InitialPointTag = "InitialPoint";
-        private const string PlayerPrefabPath = "Prefabs/#TEST_PLAYER#";
 
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly LoadingCurtain _curtain;
+        private readonly IGameFactory _gameFactory;
 
-        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain)
+        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _curtain = curtain;
+            _gameFactory = gameFactory;
         }
 
         public void Enter(string sceneName)
@@ -26,23 +28,10 @@ namespace Pewpew.Infrastructure
 
         private void OnLoaded()
         {
-            var initialPoint = GameObject.FindWithTag(InitialPointTag);
-            GameObject player = Instantiate(PlayerPrefabPath, at: initialPoint.transform.position);
+            GameObject player = _gameFactory.CreatePlayer(at: GameObject.FindWithTag(InitialPointTag));
             CameraFollow(player);
 
             _stateMachine.Enter<GameLoopState>();
-        }
-
-        private GameObject Instantiate(string path)
-        {
-            var playerPrefab = Resources.Load<GameObject>(path);
-            return Object.Instantiate(playerPrefab);
-        }
-
-        private GameObject Instantiate(string path, Vector3 at)
-        {
-            var playerPrefab = Resources.Load<GameObject>(path);
-            return Object.Instantiate(playerPrefab, at, Quaternion.identity);
         }
 
         private void CameraFollow(GameObject gameObject)
