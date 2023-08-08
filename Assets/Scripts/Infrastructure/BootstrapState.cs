@@ -21,7 +21,7 @@ public class BootstrapState : IState
     }
 
     private void EnterLoadLevel() => 
-        _stateMachine.Enter<LoadLevelState>();
+        _stateMachine.Enter<LoadLevelState,string>("Game");
 
     void RegisterServices()
     {

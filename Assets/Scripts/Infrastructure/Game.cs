@@ -7,9 +7,9 @@ namespace Pewpew.Infrastructure
         public GameStateMachine StateMachine;
 
         public static IInputService InputService { get; set; }
-        public Game(ICoroutineRunner coroutineRunner)
+        public Game(ICoroutineRunner coroutineRunner, LoadingCurtain curtain)
         {
-            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner));
+            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), curtain);
         }
     }
 }
