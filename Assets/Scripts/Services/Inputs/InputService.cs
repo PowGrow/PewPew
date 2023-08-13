@@ -8,7 +8,9 @@ namespace Pewpew.Services.Inputs
         protected const string Vertical = "Vertical";
         protected const string FireButton = "Fire";
 
-        public abstract Vector2 Axis { get; }
+        public abstract float VerticalAxis { get; }
+
+        public abstract float Torque { get; }
 
         public abstract bool IsAttackButtonUp();
     }

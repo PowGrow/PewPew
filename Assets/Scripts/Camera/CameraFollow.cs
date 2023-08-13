@@ -17,7 +17,6 @@ public class CameraFollow : MonoBehaviour
     {
         if (Following == null)
             return;
-
         var rotation = Quaternion.Euler(RotationAngleX, 0, 0);
         var position = rotation * new Vector3(0, 0, -Distance) + FollowingPointPosition();
         transform.rotation = rotation;

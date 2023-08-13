@@ -4,11 +4,18 @@ namespace Pewpew.Services.Inputs
 {
     public class StandaloneInputService : InputService
     {
-        public override Vector2 Axis => UnityAxis();
+        public override float VerticalAxis => VertAxis();
 
-        private Vector2 UnityAxis()
+        public override float Torque => TorqueAxis();
+
+        private float VertAxis()
         {
-            return new Vector2(Input.GetAxis(Horizontal), Input.GetAxis(Vertical));
+            return Input.GetAxis(Vertical);
+        }
+
+        private float TorqueAxis()
+        {
+            return Input.GetAxis(Horizontal);
         }
 
         public override bool IsAttackButtonUp()

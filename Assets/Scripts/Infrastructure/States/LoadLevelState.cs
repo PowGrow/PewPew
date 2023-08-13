@@ -29,7 +29,7 @@ namespace Pewpew.Infrastructure.States
         private void OnLoaded()
         {
             GameObject player = _gameFactory.CreatePlayer(at: GameObject.FindWithTag(InitialPointTag));
-            CameraFollow(player);
+            //CameraFollow(player);
 
             _stateMachine.Enter<GameLoopState>();
         }
