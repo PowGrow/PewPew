@@ -17,6 +17,8 @@ namespace Pewpew.Infrastructure.States
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, services.Single<IGameFactory>()),
                 [typeof(GameLoopState)] = new GameLoopState(this),
+                [typeof(LoadLobbyState)] = new LoadLobbyState(this, sceneLoader, curtain, services.Single<IGameFactory>()),
+                [typeof(LobbyState)] = new LobbyState(this, curtain),
             };
         }
 

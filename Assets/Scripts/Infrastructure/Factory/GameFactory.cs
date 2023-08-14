@@ -16,5 +16,8 @@ namespace Pewpew.Infrastructure.Factory
 
         public GameObject CreatePlayer(GameObject at) =>
             _assets.Instantiate(AssetPath.PlayerPrefabPath, at: at.transform.position);
+
+        public GameObject CreateLobbyHud() =>
+            _assets.Instantiate(AssetPath.LobbyHudPrefabPath);
     }
 }

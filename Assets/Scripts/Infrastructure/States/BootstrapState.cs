@@ -32,7 +32,7 @@ namespace Pewpew.Infrastructure.States
         }
 
         private void EnterLoadLevel() =>
-            _stateMachine.Enter<LoadLevelState, string>("Game");
+            _stateMachine.Enter<LoadLobbyState, string>("Lobby");
 
         private void RegisterServices()
         {
