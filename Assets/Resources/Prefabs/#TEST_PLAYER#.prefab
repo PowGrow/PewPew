@@ -78,7 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterController: {fileID: 8687120335383008240}
   MovementSpeed: 10
-  DeltaTorque: 1
+  DeltaTorque: 4
 --- !u!54 &6122002507025519082
 Rigidbody:
   m_ObjectHideFlags: 0
