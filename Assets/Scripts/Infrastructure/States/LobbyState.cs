@@ -3,7 +3,7 @@ using System;
 
 public class LobbyState : IPayloadedState<UiLobbyView>
 {
-    private const int TEMP_LEVEL_SIZE = 1000;
+    private const float TEMP_LEVEL_SIZE = 2.5f;
 
     private GameStateMachine _stateMachine;
     private UiLobbyView _lobbyView;
@@ -17,7 +17,7 @@ public class LobbyState : IPayloadedState<UiLobbyView>
 
     private void PlayButtonClickEventHandler()
     {
-        _stateMachine.Enter<LoadLevelState, int>(TEMP_LEVEL_SIZE);
+        _stateMachine.Enter<LoadLevelState, float>(TEMP_LEVEL_SIZE);
     }
 
     public void Enter(UiLobbyView lobbyView)

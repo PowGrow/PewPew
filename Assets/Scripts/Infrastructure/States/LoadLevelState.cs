@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Pewpew.Infrastructure.States
 {
-    internal class LoadLevelState : IPayloadedState<int>
+    internal class LoadLevelState : IPayloadedState<float>
     {
         private const string InitialPointTag = "InitialPoint";
         private const string BorderInitialPointTag = "BorderInitialPoint";
@@ -14,7 +14,7 @@ namespace Pewpew.Infrastructure.States
         private readonly LoadingCurtain _curtain;
         private readonly IGameFactory _gameFactory;
 
-        private int _levelSize;
+        private float _levelSize;
 
 
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory)
@@ -25,7 +25,7 @@ namespace Pewpew.Infrastructure.States
             _gameFactory = gameFactory;
         }
 
-        public void Enter(int levelSize)
+        public void Enter(float levelSize)
         {
             _levelSize = levelSize;
             _curtain.Show();
