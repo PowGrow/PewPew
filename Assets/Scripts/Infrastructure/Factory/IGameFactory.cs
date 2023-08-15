@@ -7,5 +7,6 @@ namespace Pewpew.Infrastructure.Factory
     {
         GameObject CreatePlayer(GameObject at);
         GameObject CreateLobbyHud();
+        GameObject CreateGameBorder(int borderSize, GameObject at);
     }
 }

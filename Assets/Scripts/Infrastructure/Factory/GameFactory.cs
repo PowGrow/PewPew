@@ -1,5 +1,8 @@
 ﻿using Pewpew.Infrastructure.AssetManagment;
+using UnityEditor.ProBuilder;
 using UnityEngine;
+using UnityEngine.ProBuilder;
+using UnityEngine.ProBuilder.Shapes;
 
 namespace Pewpew.Infrastructure.Factory
 {
@@ -19,5 +22,11 @@ namespace Pewpew.Infrastructure.Factory
 
         public GameObject CreateLobbyHud() =>
             _assets.Instantiate(AssetPath.LobbyHudPrefabPath);
+
+        public GameObject CreateGameBorder(int borderSize, GameObject at)
+        {
+            var border = _assets.Instantiate(AssetPath.BorderPrefabPath, at: at.transform.position);
+            return border;
+        }
     }
 }
