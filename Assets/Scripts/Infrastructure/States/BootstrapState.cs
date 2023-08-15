@@ -2,6 +2,7 @@
 using Pewpew.Infrastructure.Factory;
 using Pewpew.Infrastructure.Services;
 using Pewpew.Services.Inputs;
+using UnityEngine;
 
 namespace Pewpew.Infrastructure.States
 {
@@ -24,6 +25,7 @@ namespace Pewpew.Infrastructure.States
 
         public void Enter()
         {
+            Application.targetFrameRate = 60;
             _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);
         }
         public void Exit()
