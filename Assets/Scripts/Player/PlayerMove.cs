@@ -36,7 +36,7 @@ namespace Pewpew.Player
         private void Rotate()
         {
             if (Mathf.Abs(_inputService.Torque) > Constants.Epsilon)
-                transform.Rotate(new Vector3(0, 1, 0), DeltaTorque * Mathf.Sign(_inputService.Torque));
+                transform.Rotate(new Vector3(0, 1, 0), DeltaTorque * Mathf.Sign(_inputService.Torque) * Time.deltaTime);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Pewpew.Infrastructure.Factory
         public GameObject CreateGameBorder(float borderSize, GameObject at)
         {
             var border = _assets.Instantiate(AssetPath.BorderPrefabPath, at: at.transform.position);
-            border.transform.localScale.Set(borderSize, borderSize, borderSize);
+            border.transform.localScale += new Vector3(borderSize, borderSize, borderSize);
             return border;
         }
     }

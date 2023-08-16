@@ -1,10 +1,8 @@
+using Pewpew.Infrastructure.AssetManagment;
 using Pewpew.Infrastructure.States;
-using System;
 
 public class LobbyState : IPayloadedState<UiLobbyView>
 {
-    private const float TEMP_LEVEL_SIZE = 2.5f;
-
     private GameStateMachine _stateMachine;
     private UiLobbyView _lobbyView;
     private LoadingCurtain _curtain;
@@ -17,7 +15,7 @@ public class LobbyState : IPayloadedState<UiLobbyView>
 
     private void PlayButtonClickEventHandler()
     {
-        _stateMachine.Enter<LoadLevelState, float>(TEMP_LEVEL_SIZE);
+        _stateMachine.Enter<LoadLevelState, float>(AssetLevels.LargeBorderSize);
     }
 
     public void Enter(UiLobbyView lobbyView)
