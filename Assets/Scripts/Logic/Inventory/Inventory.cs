@@ -20,7 +20,13 @@ namespace PewPew.Scripts.Logic.Inventory
             Size = size;
         }
 
-        public bool AddItem(Item item)
+
+        /// <summary>
+        /// Method trying to add item in to inventory
+        /// </summary>
+        /// <param name="item"> Item to add </param>
+        /// <returns>Int value represent remainder of item quantity in stack, value othen than zero mean there is no more space in inventory to add, and remainder quantity of item was returned</returns>
+        public int TryToAddItem(Item item)
         {
             var itemInfo = _items.GetItemInfo(item.Id);
             if (!itemInfo.IsStackable)
@@ -28,26 +34,37 @@ namespace PewPew.Scripts.Logic.Inventory
                 if (Items.Count < Size)
                     Items.Add(item);
                 else
-                    return false;
-                return true;
+                    return item.Quantity;
+                return 0;
             }
 
             var quantityToAdd = item.Quantity;
 
             foreach (Item itemInInventory in Items)
             {
+                if (quantityToAdd == 0)
+                    break;
+
                 if(itemInInventory.Id ==  item.Id)
                 {
                     var allowToAdd = itemInfo.StackSize - itemInInventory.Quantity;
-                    if(allowToAdd >= quantityToAdd)
+                    if (allowToAdd >= quantityToAdd)
+                    {
+                        itemInInventory.Quantity += quantityToAdd;
+                        quantityToAdd = 0;
+                        break;
+                    }
 
                     itemInInventory.Quantity += allowToAdd;
                     quantityToAdd -= allowToAdd;
                 }
             }
             item.Quantity = quantityToAdd;
+            if (item.Quantity > 0 && Items.Count == Size)
+                return item.Quantity;
 
-            return true;
+            Items.Add(item);
+            return 0;
         }
 
         public Item GetItem(int itemId, int quantity)
