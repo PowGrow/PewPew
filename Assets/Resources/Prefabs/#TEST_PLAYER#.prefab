@@ -629,8 +629,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4086946453569247078}
-  - component: {fileID: 6948671090004969281}
   - component: {fileID: 6122002507025519082}
+  - component: {fileID: 586783630396953720}
+  - component: {fileID: 6948671090004969281}
   - component: {fileID: 7740923810812630567}
   m_Layer: 6
   m_Name: '#TEST_PLAYER#'
@@ -656,22 +657,6 @@ Transform:
   - {fileID: 8503006357755751335}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6948671090004969281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7886459678240243345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db19bc034f8effe4a8b8c0f4d41f841d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShipRigidbody: {fileID: 6122002507025519082}
-  ShipTransform: {fileID: 5581742940322078474}
-  Speed: 1000
-  DeltaTorque: 50
 --- !u!54 &6122002507025519082
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -699,6 +684,35 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &586783630396953720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7886459678240243345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e3f04eb8aa39df449b8bca6bd2ffd3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShipInfo: {fileID: 11400000, guid: 5ad32d681fad8634cb2baf6008e377ef, type: 2}
+--- !u!114 &6948671090004969281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7886459678240243345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db19bc034f8effe4a8b8c0f4d41f841d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShipRigidbody: {fileID: 6122002507025519082}
+  ShipTransform: {fileID: 5581742940322078474}
+  Speed: 1000
+  DeltaTorque: 50
 --- !u!114 &7740923810812630567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -717,6 +731,11 @@ MonoBehaviour:
   - {fileID: 3279483549892857723}
   EngineLight: {fileID: 8021123216781806159}
   ShipTransform: {fileID: 5581742940322078474}
+  TrailsOnAngles:
+  - 45
+  - 315
+  - 135
+  - 225
 --- !u!1001 &1858611459859209579
 PrefabInstance:
   m_ObjectHideFlags: 0
