@@ -44,6 +44,7 @@ namespace Pewpew.Infrastructure.States
             GameObject player = _gameFactory.CreatePlayer(at: GameObject.FindWithTag(InitialPointTag));
             SetBulletPrefab(player.GetComponent<Stats>().Weapon);
             player.GetComponent<Guns>().Initialize();
+            player.GetComponent<Health>().Initialize();
             GameObject border = _gameFactory.CreateGameBorder(_levelSize, at: GameObject.FindWithTag(BorderInitialPointTag));
             CameraFollow(player);
 
