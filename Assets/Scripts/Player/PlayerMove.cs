@@ -8,35 +8,60 @@ namespace Pewpew.Player
     public class PlayerMove : MonoBehaviour
     {
         [SerializeField]
-        private CharacterController CharacterController;
+        private Rigidbody ShipRigidbody;
+        [SerializeField]
+        private Transform ShipTransform;
         [SerializeField]
         private float MovementSpeed;
         [SerializeField]
         private float DeltaTorque;
 
         private IInputService _inputService;
+        private Camera _mainCamera;
 
         private void Awake()
         {
+            _mainCamera = Camera.main;
             _inputService = AllServices.Container.Single<IInputService>();
         }
 
         private void Update()
         {
-            Move();
-            Rotate();
+            Move(ShipRigidbody);
+            Rotate(ShipTransform);
         }
 
-        private void Move()
+        private void Move(Rigidbody shipRigidbody)
         {
-            if (Mathf.Abs(_inputService.VerticalAxis) > Constants.Epsilon)
-                CharacterController.Move(transform.forward * Mathf.Sign(_inputService.VerticalAxis) * MovementSpeed * Time.deltaTime);
+            if (Mathf.Abs(_inputService.VerticalAxis) > Constants.Epsilon || Mathf.Abs(_inputService.Torque) > Constants.Epsilon)
+            {
+                var movementVector = new Vector3(_inputService.Torque,0, _inputService.VerticalAxis);
+                movementVector *= shipRigidbody.mass * MovementSpeed * Time.deltaTime;
+                shipRigidbody.AddForce(movementVector);
+                Debug.Log(shipRigidbody.velocity);
+            }
         }
 
-        private void Rotate()
+        private void Rotate(Transform shipTransform)
         {
-            if (Mathf.Abs(_inputService.Torque) > Constants.Epsilon)
-                transform.Rotate(new Vector3(0, 1, 0), DeltaTorque * Mathf.Sign(_inputService.Torque) * Time.deltaTime);
+            var lookAtRotation = LookRotation(shipTransform.transform);
+            if (Quaternion.Angle(shipTransform.rotation, lookAtRotation) > Constants.Epsilon)
+                shipTransform.rotation = Quaternion.RotateTowards(shipTransform.rotation, lookAtRotation, DeltaTorque * Time.deltaTime);
+        }
+
+        private Quaternion LookRotation(Transform shipTransform)
+        {
+            Vector3 lookAtPosition = LookPosition(shipTransform);
+            var lookAtDirection = (lookAtPosition - shipTransform.position).normalized;
+            return Quaternion.LookRotation(lookAtDirection);
+        }
+
+        private Vector3 LookPosition(Transform shipTransform)
+        {
+            var mousePositionRay = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit mousePositionRayCastHitInfo;
+            Physics.Raycast(mousePositionRay, out mousePositionRayCastHitInfo);
+            return new Vector3(mousePositionRayCastHitInfo.point.x, shipTransform.position.y, mousePositionRayCastHitInfo.point.z);
         }
     }
 }

@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="Lobby-Storage" src="project://database/Assets/Resources/Models/UI/Lobby-Storage.uxml?fileID=9197481963319205126&amp;guid=1272dabc0a196e34eaceaa4f45d6946d&amp;type=3#Lobby-Storage" />
+    <ui:VisualElement name="Root" style="flex-grow: 1; flex-direction: row;">
+        <ui:VisualElement style="flex-grow: 1; width: 60%;" />
+        <ui:VisualElement style="flex-grow: 1; width: auto; min-width: auto;">
+            <ui:VisualElement style="flex-grow: 1;" />
+            <ui:VisualElement name="Storage-Window-Container" style="flex-grow: 1; height: 50%;">
+                <ui:Instance template="Lobby-Storage" name="Lobby-Storage" style="flex-grow: 1;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; height: 15%;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:Instance template="Lobby-Storage" name="Lobby-Storage" />
+</ui:UXML>
