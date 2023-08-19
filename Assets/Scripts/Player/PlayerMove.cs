@@ -12,7 +12,7 @@ namespace Pewpew.Player
         [SerializeField]
         private Transform ShipTransform;
         [SerializeField]
-        private float MovementSpeed;
+        private float Speed;
         [SerializeField]
         private float DeltaTorque;
 
@@ -25,7 +25,7 @@ namespace Pewpew.Player
             _inputService = AllServices.Container.Single<IInputService>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             Move(ShipRigidbody);
             Rotate(ShipTransform);
@@ -36,9 +36,8 @@ namespace Pewpew.Player
             if (Mathf.Abs(_inputService.VerticalAxis) > Constants.Epsilon || Mathf.Abs(_inputService.Torque) > Constants.Epsilon)
             {
                 var movementVector = new Vector3(_inputService.Torque,0, _inputService.VerticalAxis);
-                movementVector *= shipRigidbody.mass * MovementSpeed * Time.deltaTime;
+                movementVector *= shipRigidbody.mass * Speed * Time.deltaTime;
                 shipRigidbody.AddForce(movementVector);
-                Debug.Log(shipRigidbody.velocity);
             }
         }
 

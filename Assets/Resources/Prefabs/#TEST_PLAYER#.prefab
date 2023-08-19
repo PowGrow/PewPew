@@ -670,7 +670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShipRigidbody: {fileID: 6122002507025519082}
   ShipTransform: {fileID: 5581742940322078474}
-  MovementSpeed: 1000
+  Speed: 1000
   DeltaTorque: 50
 --- !u!54 &6122002507025519082
 Rigidbody:
@@ -716,6 +716,7 @@ MonoBehaviour:
   - {fileID: 2020963065843862132}
   - {fileID: 3279483549892857723}
   EngineLight: {fileID: 8021123216781806159}
+  ShipTransform: {fileID: 5581742940322078474}
 --- !u!1001 &1858611459859209579
 PrefabInstance:
   m_ObjectHideFlags: 0

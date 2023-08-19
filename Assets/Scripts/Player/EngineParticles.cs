@@ -9,6 +9,10 @@ public class EngineParticles : MonoBehaviour
     private List<TrailRenderer> EngineTrails;
     [SerializeField]
     private Light EngineLight;
+    [SerializeField]
+    private Transform ShipTransform;
+    [SerializeField]
+    private List<float> TrailsOnAngles = new List<float>() { 45f,315f,135f,225f };
 
     private IInputService _inputService;
 
@@ -38,10 +42,24 @@ public class EngineParticles : MonoBehaviour
 
     private void ControlTrails()
     {
-        if (_inputService.VerticalAxis > 0)
+        
+        if ((IsInputNotZero()) && (IsTorqueMatchTrailsAngles()))
             SetTrails(emitting: true);
         else
             SetTrails(emitting: false);
+
+    }
+
+    private bool IsTorqueMatchTrailsAngles()
+    {
+        var shipTorque = ShipTransform.rotation.eulerAngles.y;
+        return (shipTorque <= TrailsOnAngles[0] || shipTorque >= TrailsOnAngles[1]) ||
+                (shipTorque >= TrailsOnAngles[2] && shipTorque <= TrailsOnAngles[3]);
+    }
+
+    private bool IsInputNotZero()
+    {
+        return _inputService.VerticalAxis != 0 || _inputService.Torque != 0;
     }
 
     private void SetTrails(bool emitting)
