@@ -12,3 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69cf83713c8a36b4097af1550bdaccda, type: 3}
   m_Name: DefaultShip
   m_EditorClassIdentifier: 
+  Speed: 1000
+  Torque: 45
+  Health: 100
+  Armor: 5
+  Shields: 0
+  Damage: 10
+  Weapon: 0
+  RateOfFire: 0.5
+  ReloadTime: 5
+  AmmoStock: 20
+  FireDistance: 10
+  FireSpread: 30

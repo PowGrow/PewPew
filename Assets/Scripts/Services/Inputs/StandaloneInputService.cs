@@ -4,23 +4,23 @@ namespace Pewpew.Services.Inputs
 {
     public class StandaloneInputService : InputService
     {
-        public override float VerticalAxis => VertAxis();
+        public override float zAxis => VerticalAxis();
 
-        public override float Torque => TorqueAxis();
+        public override float xAxis => HorizontalAxis();
 
-        private float VertAxis()
+        private float VerticalAxis()
         {
             return Input.GetAxis(Vertical);
         }
 
-        private float TorqueAxis()
+        private float HorizontalAxis()
         {
             return Input.GetAxis(Horizontal);
         }
 
-        public override bool IsAttackButtonUp()
+        public override bool IsAttackButtonDown()
         {
-            return Input.GetButtonUp(FireButton);
+            return Input.GetButton(FireButton);
         }
     }
 }

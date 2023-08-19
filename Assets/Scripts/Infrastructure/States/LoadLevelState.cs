@@ -1,5 +1,6 @@
 ﻿using Pewpew.Infrastructure.AssetManagment;
 using Pewpew.Infrastructure.Factory;
+using Pewpew.Player;
 using UnityEngine;
 
 namespace Pewpew.Infrastructure.States
@@ -13,16 +14,18 @@ namespace Pewpew.Infrastructure.States
         private readonly SceneLoader _sceneLoader;
         private readonly LoadingCurtain _curtain;
         private readonly IGameFactory _gameFactory;
+        private readonly IBulletFactory _bulletFactory;
 
         private float _levelSize;
 
 
-        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory)
+        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory, IBulletFactory bulletFactory)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _curtain = curtain;
             _gameFactory = gameFactory;
+            _bulletFactory = bulletFactory;
         }
 
         public void Enter(float levelSize)
@@ -39,10 +42,29 @@ namespace Pewpew.Infrastructure.States
         private void OnLoaded()
         {
             GameObject player = _gameFactory.CreatePlayer(at: GameObject.FindWithTag(InitialPointTag));
+            SetBulletPrefab(player.GetComponent<Stats>().Weapon);
+            player.GetComponent<Guns>().Initialize();
             GameObject border = _gameFactory.CreateGameBorder(_levelSize, at: GameObject.FindWithTag(BorderInitialPointTag));
             CameraFollow(player);
 
             _stateMachine.Enter<GameLoopState>();
+        }
+
+        private void SetBulletPrefab(WeaponType weaponType)
+        {
+            switch (weaponType)
+            {
+                case WeaponType.MachineGun:
+                    _bulletFactory.CreateBulletPool(AssetPath.BulletPrefabPath);
+                    break;
+                case WeaponType.RocketLauncher:
+                    _bulletFactory.CreateBulletPool(AssetPath.RocketPrefabPath);
+                    break;
+                case WeaponType.Laser:
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void CameraFollow(GameObject gameObject)

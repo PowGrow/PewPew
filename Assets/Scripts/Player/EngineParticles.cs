@@ -34,7 +34,7 @@ public class EngineParticles : MonoBehaviour
 
     private void ControlLight()
     {
-        if (_inputService.VerticalAxis != 0 || _inputService.Torque != 0)
+        if (_inputService.zAxis != 0 || _inputService.xAxis != 0)
             EngineLight.enabled = true;
         else
             EngineLight.enabled = false;
@@ -59,7 +59,7 @@ public class EngineParticles : MonoBehaviour
 
     private bool IsInputNotZero()
     {
-        return _inputService.VerticalAxis != 0 || _inputService.Torque != 0;
+        return _inputService.zAxis != 0 || _inputService.xAxis != 0;
     }
 
     private void SetTrails(bool emitting)

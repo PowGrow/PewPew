@@ -6,12 +6,12 @@ namespace Pewpew.Services.Inputs
     {
         protected const string Horizontal = "Horizontal";
         protected const string Vertical = "Vertical";
-        protected const string FireButton = "Fire";
+        protected const string FireButton = "Fire1";
 
-        public abstract float VerticalAxis { get; }
+        public abstract float zAxis { get; }
 
-        public abstract float Torque { get; }
+        public abstract float xAxis { get; }
 
-        public abstract bool IsAttackButtonUp();
+        public abstract bool IsAttackButtonDown();
     }
 }

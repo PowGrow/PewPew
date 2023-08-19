@@ -33,9 +33,10 @@ namespace Pewpew.Player
 
         private void Move(Rigidbody shipRigidbody)
         {
-            if (Mathf.Abs(_inputService.VerticalAxis) > Constants.Epsilon || Mathf.Abs(_inputService.Torque) > Constants.Epsilon)
+            if (Mathf.Abs(_inputService.zAxis) > Constants.Epsilon || Mathf.Abs(_inputService.xAxis) > Constants.Epsilon)
             {
-                var movementVector = new Vector3(_inputService.Torque,0, _inputService.VerticalAxis);
+                var movementVector = new Vector3(_inputService.xAxis,0, _inputService.zAxis);
+                movementVector.Normalize();
                 movementVector *= shipRigidbody.mass * Speed * Time.deltaTime;
                 shipRigidbody.AddForce(movementVector);
             }

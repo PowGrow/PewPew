@@ -1,8 +1,5 @@
 ﻿using Pewpew.Infrastructure.AssetManagment;
-using UnityEditor.ProBuilder;
 using UnityEngine;
-using UnityEngine.ProBuilder;
-using UnityEngine.ProBuilder.Shapes;
 
 namespace Pewpew.Infrastructure.Factory
 {

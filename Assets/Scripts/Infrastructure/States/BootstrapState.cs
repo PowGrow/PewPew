@@ -9,6 +9,7 @@ namespace Pewpew.Infrastructure.States
     public class BootstrapState : IState
     {
         private const string Initial = "Initial";
+        private const float BulletPoolSize = 100;
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private AllServices _services;
@@ -41,6 +42,7 @@ namespace Pewpew.Infrastructure.States
             _services.RegisterSingle<IInputService>(new StandaloneInputService());
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
+            _services.RegisterSingle<IBulletFactory>(new BulletFactory(_services.Single<IAssetProvider>(), BulletPoolSize));
         }
     }
 }

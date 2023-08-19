@@ -1,14 +1,13 @@
 ﻿using Pewpew.Infrastructure.Services;
-using UnityEngine;
 
 namespace Pewpew.Services.Inputs
 {
     public interface IInputService: IService
     {
-        public abstract float VerticalAxis { get; }
+        public abstract float zAxis { get; }
 
-        public abstract float Torque { get; }
+        public abstract float xAxis { get; }
 
-        public abstract bool IsAttackButtonUp();
+        public abstract bool IsAttackButtonDown();
     }
 }
