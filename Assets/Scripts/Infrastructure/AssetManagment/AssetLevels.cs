@@ -7,5 +7,13 @@
         public const float SmallBorderSize = 0f;
         public const float MediumBorderSize = 1f;
         public const float LargeBorderSize = 1.5f;
+
+        public const float SmallAsteroidPerlinMin = 93f;
+        public const float MediumAsteroidPerlinMin = 95f;
+        public const float LargeAsteroidPerlinMin = 99f;
+
+        public const float SmallAsteroidSize = 1f;
+        public const float MediumAsteroidSize = 3f;
+        public const float LargeAsteroidSize = 7f;
     }
 }

@@ -6,13 +6,19 @@ namespace Pewpew.Infrastructure.AssetManagment
 
         public GameObject Instantiate(string path)
         {
-            var playerPrefab = Resources.Load<GameObject>(path);
-            return Object.Instantiate(playerPrefab);
+            var prefab = Resources.Load<GameObject>(path);
+            return Object.Instantiate(prefab);
         }
         public GameObject Instantiate(string path, Vector3 at)
         {
-            var playerPrefab = Resources.Load<GameObject>(path);
-            return Object.Instantiate(playerPrefab, at, Quaternion.identity);
+            var prefab = Resources.Load<GameObject>(path);
+            return Object.Instantiate(prefab, at, Quaternion.identity);
+        }
+
+        public GameObject Instantiate(string path, Vector3 at, Quaternion faceTo)
+        {
+            var prefab = Resources.Load<GameObject>(path);
+            return Object.Instantiate(prefab, at, faceTo);
         }
 
     }

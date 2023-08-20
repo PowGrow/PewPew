@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8869501554183754420}
   - component: {fileID: 8684396493263226063}
   - component: {fileID: 6036534178114399094}
+  - component: {fileID: 1825767758901393682}
   m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
@@ -118,5 +119,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa341a67e5daccd49afdcee4dd8216be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 20
+  Speed: 40
   RangeLayerName: BulletRange
+--- !u!95 &1825767758901393682
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863312931929199500}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 012dc23020dd29a4696e9f1c2df22d82, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

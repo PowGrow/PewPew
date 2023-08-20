@@ -1,4 +1,5 @@
 ﻿using Pewpew.Infrastructure.AssetManagment;
+using Pewpew.Logic.Map;
 using UnityEngine;
 
 namespace Pewpew.Infrastructure.Factory
@@ -25,6 +26,27 @@ namespace Pewpew.Infrastructure.Factory
             var border = _assets.Instantiate(AssetPath.BorderPrefabPath, at: at.transform.position);
             border.transform.localScale += new Vector3(borderSize, borderSize, borderSize);
             return border;
+        }
+
+        public GameObject CreateAsteroid(Vector3 at, Quaternion rotation, AsteroidTypes type)
+        {
+            GameObject asteroid;
+            switch (type)
+            {
+                case AsteroidTypes.Small:
+                    asteroid = _assets.Instantiate(AssetPath.AsteroidSmallPrefabPath, at, faceTo: rotation);
+                    break;
+                case AsteroidTypes.Medium:
+                    asteroid = _assets.Instantiate(AssetPath.AsteroidMediumPrefabPath, at, faceTo: rotation);
+                    break;
+                case AsteroidTypes.Large:
+                    asteroid = _assets.Instantiate(AssetPath.AsteroidLargePrefabPath, at, faceTo: rotation);
+                    break;
+                default:
+                    asteroid = _assets.Instantiate(AssetPath.AsteroidSmallPrefabPath, at, faceTo: rotation);
+                    break;
+            }
+            return asteroid;
         }
     }
 }

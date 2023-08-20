@@ -8,6 +8,8 @@ namespace Pewpew.Player
     public class PlayerMove : MonoBehaviour
     {
         [SerializeField]
+        private Stats ShipInfo;
+        [SerializeField]
         private Rigidbody ShipRigidbody;
         [SerializeField]
         private Transform ShipTransform;
@@ -23,6 +25,8 @@ namespace Pewpew.Player
         {
             _mainCamera = Camera.main;
             _inputService = AllServices.Container.Single<IInputService>();
+            Speed = ShipInfo.Speed;
+            DeltaTorque = ShipInfo.Torque;
         }
 
         private void FixedUpdate()

@@ -1,6 +1,8 @@
 ﻿using Pewpew.Infrastructure.AssetManagment;
 using Pewpew.Infrastructure.Factory;
+using Pewpew.Logic.Map;
 using Pewpew.Player;
+using System;
 using UnityEngine;
 
 namespace Pewpew.Infrastructure.States
@@ -17,6 +19,7 @@ namespace Pewpew.Infrastructure.States
         private readonly IBulletFactory _bulletFactory;
 
         private float _levelSize;
+        private Generator _levelGenerator;
 
 
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory, IBulletFactory bulletFactory)
@@ -47,6 +50,9 @@ namespace Pewpew.Infrastructure.States
             player.GetComponent<Health>().Initialize();
             GameObject border = _gameFactory.CreateGameBorder(_levelSize, at: GameObject.FindWithTag(BorderInitialPointTag));
             CameraFollow(player);
+
+            _levelGenerator = new Generator(_gameFactory);
+            _levelGenerator.GenerateAsteroids(500);
 
             _stateMachine.Enter<GameLoopState>();
         }

@@ -802,7 +802,7 @@ Transform:
   m_GameObject: {fileID: 7886459678240243345}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 37.64}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -893,6 +893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db19bc034f8effe4a8b8c0f4d41f841d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShipInfo: {fileID: 586783630396953720}
   ShipRigidbody: {fileID: 6122002507025519082}
   ShipTransform: {fileID: 5581742940322078474}
   Speed: 1000

@@ -25,7 +25,6 @@ public class Health : MonoBehaviour
 
         if (CurrentHealth <= 0)
             EmergencyExit();
-        
     }
 
     private float ApplyShieldDamage(float damage)
@@ -39,11 +38,9 @@ public class Health : MonoBehaviour
             Shields = 0;
             return damage;
         }
-        else
-        {
-            Shields -= damage;
-            return 0;
-        }
+
+        Shields -= damage;
+        return 0;
     }
 
     private void EmergencyExit()
