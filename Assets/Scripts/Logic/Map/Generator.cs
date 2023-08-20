@@ -1,6 +1,7 @@
 using Pewpew.Infrastructure.AssetManagment;
 using Pewpew.Infrastructure.Factory;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pewpew.Logic.Map
@@ -10,47 +11,33 @@ namespace Pewpew.Logic.Map
         private Map _asteroidMap;
 
         private IGameFactory _gameFactory;
+        private int _asteroidDensity;
 
-        public Generator(IGameFactory gameFactory)
+        public Generator(IGameFactory gameFactory, int asteroidsDensity)
         {
             _gameFactory = gameFactory;
+            _asteroidDensity = asteroidsDensity;
         }
 
         public void GenerateAsteroids(int mapRadius)
         {
-            var counter = 0;
             _asteroidMap = InstantiateAsteroidMap(mapRadius);
-            for (int x = -1 * mapRadius; x < mapRadius; x += 5)
+            for (int x = -1 * mapRadius; x < mapRadius; x += _asteroidDensity)
             {
-                for (int y = -1 * mapRadius; y < mapRadius; y += 5)
+                for (int y = -1 * mapRadius; y < mapRadius; y += _asteroidDensity)
                 {
                     if (!IsCoordinateInRadius(x,y,mapRadius) || !IsCoordinateAvaliable(x,y)) //!!!
                         continue;
 
                     var pointAsteroidScale = UnityEngine.Random.Range(0, 100f);
-                    if(pointAsteroidScale >= AssetLevels.LargeAsteroidPerlinMin)
-                    {
-                        CreateAsteroid(at: (x,y), AsteroidTypes.Large);
-                        counter++;
-                        continue;
-                    }
 
-                    if(pointAsteroidScale >= AssetLevels.MediumAsteroidPerlinMin)
+                    foreach(KeyValuePair<AsteroidTypes,float> type in AssetLevels.AsteroidSizes)
                     {
-                        CreateAsteroid(at: (x, y), AsteroidTypes.Medium);
-                        counter++;
-                        continue;
-                    }
-
-                    if(pointAsteroidScale >= AssetLevels.SmallAsteroidPerlinMin)
-                    {
-                        CreateAsteroid(at: (x, y), AsteroidTypes.Small);
-                        counter++;
-                        continue;
+                        if(pointAsteroidScale >= type.Value)
+                            CreateAsteroid(at: (x, y), type.Key);
                     }
                 }
             }
-            Debug.Log(counter);
         }
 
         private void CreateAsteroid((int x,int y) at, AsteroidTypes type)

@@ -51,7 +51,7 @@ namespace Pewpew.Infrastructure.States
             GameObject border = _gameFactory.CreateGameBorder(_levelSize, at: GameObject.FindWithTag(BorderInitialPointTag));
             CameraFollow(player);
 
-            _levelGenerator = new Generator(_gameFactory);
+            _levelGenerator = new Generator(_gameFactory,5);
             _levelGenerator.GenerateAsteroids(500);
 
             _stateMachine.Enter<GameLoopState>();
