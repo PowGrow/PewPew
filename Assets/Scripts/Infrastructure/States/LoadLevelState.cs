@@ -45,7 +45,8 @@ namespace Pewpew.Infrastructure.States
         private void OnLoaded()
         {
             GameObject player = _gameFactory.CreatePlayer(at: GameObject.FindWithTag(InitialPointTag));
-            SetBulletPrefab(player.GetComponent<Stats>().Weapon);
+            var playerInfo = player.GetComponent<Stats>();
+            CreateBulletPool(playerInfo.Weapon, playerInfo.Damage);
             player.GetComponent<Guns>().Initialize();
             player.GetComponent<Health>().Initialize();
             GameObject border = _gameFactory.CreateGameBorder(_levelSize, at: GameObject.FindWithTag(BorderInitialPointTag));
@@ -57,15 +58,15 @@ namespace Pewpew.Infrastructure.States
             _stateMachine.Enter<GameLoopState>();
         }
 
-        private void SetBulletPrefab(WeaponType weaponType)
+        private void CreateBulletPool(WeaponType weaponType, float Damage)
         {
             switch (weaponType)
             {
                 case WeaponType.MachineGun:
-                    _bulletFactory.CreateBulletPool(AssetPath.BulletPrefabPath);
+                    _bulletFactory.CreateBulletPool(AssetPath.BulletPrefabPath, Damage);
                     break;
                 case WeaponType.RocketLauncher:
-                    _bulletFactory.CreateBulletPool(AssetPath.RocketPrefabPath);
+                    _bulletFactory.CreateBulletPool(AssetPath.RocketPrefabPath, Damage);
                     break;
                 case WeaponType.Laser:
                     break;

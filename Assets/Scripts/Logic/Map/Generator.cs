@@ -34,7 +34,10 @@ namespace Pewpew.Logic.Map
                     foreach(KeyValuePair<AsteroidTypes,float> type in AssetLevels.AsteroidSizes)
                     {
                         if(pointAsteroidScale >= type.Value)
+                        {
                             CreateAsteroid(at: (x, y), type.Key);
+                            break;
+                        }
                     }
                 }
             }

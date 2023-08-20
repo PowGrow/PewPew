@@ -32,13 +32,15 @@ namespace Pewpew.Infrastructure.Factory
             return null;
         }
 
-        public void CreateBulletPool(string bulletPrefabPath)
+        public void CreateBulletPool(string bulletPrefabPath, float Damage)
         {
             if( _bulletsPool.Count == 0 )
             {
                 for (int i = 0; i < _poolSize; i++)
                 {
-                    _bulletsPool.Add(InstantiateBullet(bulletPrefabPath));
+                    var bullet = InstantiateBullet(bulletPrefabPath);
+                    bullet.Damage = Damage;
+                    _bulletsPool.Add(bullet);
                 }
             }
         }

@@ -22,9 +22,9 @@ namespace Pewpew.Infrastructure.AssetManagment
 
         public static readonly Dictionary<AsteroidTypes,float> AsteroidSizes = new Dictionary<AsteroidTypes, float>
         {
-            {AsteroidTypes.Small, SmallAsteroidPerlinMin },
-            {AsteroidTypes.Medium, MediumAsteroidPerlinMin},
             {AsteroidTypes.Large, LargeAsteroidPerlinMin },
+            {AsteroidTypes.Medium, MediumAsteroidPerlinMin},
+            {AsteroidTypes.Small, SmallAsteroidPerlinMin },
         };
     }
 }

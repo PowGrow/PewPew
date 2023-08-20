@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
     private float Speed;
     [SerializeField]
     private string RangeLayerName = "BulletRange";
+
+    public float Damage { get; set; } = 1f;
     public bool IsActive { get { return gameObject.activeSelf; } }
 
     private void Awake()
@@ -20,6 +22,14 @@ public class Bullet : MonoBehaviour
     {
             Set(active: false);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Asteroid asteroid = null;
+        if (other.gameObject.TryGetComponent<Asteroid>(out asteroid))
+            asteroid.GetDamage();
+    }
+
     public void Set(bool active)
     {
         this.gameObject.SetActive(active);

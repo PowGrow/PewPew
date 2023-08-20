@@ -18,12 +18,12 @@ public class Asteroid : MonoBehaviour
     [ContextMenu("TestDamage")]
     public void TestDamage()
     {
-        GetDamage(1);
+        GetDamage();
     }
 
-    public void GetDamage(int damageValue)
+    public void GetDamage()
     {
-        Health -= damageValue;
+        Health--;
         DamageParticles.Play();
         if (Health <= 0)
             Destruct();

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1431855561955564891}
   - component: {fileID: 5316958454028050106}
   - component: {fileID: 5019425699503797631}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Impact small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4756,7 +4756,7 @@ GameObject:
   - component: {fileID: 8638255437037254867}
   - component: {fileID: 2469750901523698147}
   - component: {fileID: 8063159778377716630}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4874,7 +4874,7 @@ GameObject:
   - component: {fileID: 948824249727126865}
   - component: {fileID: 8601099283570539613}
   - component: {fileID: 707996948982264471}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9590,8 +9590,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9006490364864519540}
-  - component: {fileID: 8659436293949444760}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Asteroid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9615,22 +9614,6 @@ Transform:
   - {fileID: 1107489926185067141}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8659436293949444760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2719466787984138882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6adf041d2f1dc0478d1d7b99ca34ba0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MeshRenderer: {fileID: 1366342722031772510}
-  DestroyParticles: {fileID: 7154321949298378649}
-  DamageParticles: {fileID: 2304623598030262488}
-  Health: 5
 --- !u!1 &3242073142451864670
 GameObject:
   m_ObjectHideFlags: 0
@@ -9642,7 +9625,7 @@ GameObject:
   - component: {fileID: 9216206286197018154}
   - component: {fileID: 8367564642905192988}
   - component: {fileID: 6052868651341611212}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14432,7 +14415,7 @@ GameObject:
   - component: {fileID: 771193632401469376}
   - component: {fileID: 2465479866044126259}
   - component: {fileID: 3815669582239230261}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14448,7 +14431,7 @@ Transform:
   m_GameObject: {fileID: 4096403381328691572}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14548,7 +14531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1107489926185067141}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14583,7 +14566,7 @@ GameObject:
   - component: {fileID: 585292294101643209}
   - component: {fileID: 7643279822942892361}
   - component: {fileID: 4469398569469166527}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Small fire anim delay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19423,7 +19406,7 @@ GameObject:
   - component: {fileID: 4413010532655089096}
   - component: {fileID: 3548867652260720660}
   - component: {fileID: 8926183821515845333}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24321,7 +24304,7 @@ GameObject:
   - component: {fileID: 9123403435643330338}
   - component: {fileID: 2935084043786865252}
   - component: {fileID: 1110431906287039855}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29039,7 +29022,7 @@ GameObject:
   - component: {fileID: 5344781956725738654}
   - component: {fileID: 5213685999798260642}
   - component: {fileID: 987536759372019879}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33937,7 +33920,7 @@ GameObject:
   - component: {fileID: 6937583797551054588}
   - component: {fileID: 8345448018877606839}
   - component: {fileID: 670144130462475650}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ember
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38835,7 +38818,7 @@ GameObject:
   - component: {fileID: 6762576415695297956}
   - component: {fileID: 2304623598030262488}
   - component: {fileID: 2533137515225310235}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DamageParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38851,8 +38834,8 @@ Transform:
   m_GameObject: {fileID: 6245019635928498991}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -36.8, y: -0.51000005, z: -16.06734}
-  m_LocalScale: {x: 9.545458, y: 9.545456, z: 9.545456}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6937583797551054588}
@@ -43738,7 +43721,7 @@ GameObject:
   - component: {fileID: 3037973272179184338}
   - component: {fileID: 7154321949298378649}
   - component: {fileID: 4474974233444094408}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DestroyParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43753,9 +43736,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7019977543202492865}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -36.8, y: -0.51, z: -15.61}
-  m_LocalScale: {x: 4.772729, y: 4.772728, z: 4.772728}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9216206286197018154}
@@ -43765,7 +43748,7 @@ Transform:
   - {fileID: 4413010532655089096}
   - {fileID: 771193632401469376}
   m_Father: {fileID: 1107489926185067141}
-  m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &7154321949298378649
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -48507,7 +48490,7 @@ GameObject:
   - component: {fileID: 1692525596015974546}
   - component: {fileID: 1887431864772037056}
   - component: {fileID: 1299260004912574861}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Lines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53354,6 +53337,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Asteroid_model
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 49adc519c78c0314a8f0d5931e7a2914,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -53366,6 +53354,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2351442052630466513}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 49adc519c78c0314a8f0d5931e7a2914,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2867933665542056648}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 49adc519c78c0314a8f0d5931e7a2914,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8213583014474996785}
   m_SourcePrefab: {fileID: 100100000, guid: 49adc519c78c0314a8f0d5931e7a2914, type: 3}
 --- !u!4 &197337786082859057 stripped
 Transform:
@@ -53394,8 +53390,8 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
@@ -53415,7 +53411,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MeshCollider: {fileID: 5062320882634272099}
   Particles: {fileID: 4278424741142844206}
-  Asteroid: {fileID: 8659436293949444760}
+  Asteroid: {fileID: 2867933665542056648}
+--- !u!114 &2867933665542056648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717977825986691723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6adf041d2f1dc0478d1d7b99ca34ba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeshRenderer: {fileID: 1366342722031772510}
+  DestroyParticles: {fileID: 7154321949298378649}
+  DamageParticles: {fileID: 2304623598030262488}
+  Health: 5
+--- !u!54 &8213583014474996785
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717977825986691723}
+  serializedVersion: 4
+  m_Mass: 500
+  m_Drag: 2
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!23 &1366342722031772510 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 49adc519c78c0314a8f0d5931e7a2914,

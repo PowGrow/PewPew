@@ -6,6 +6,6 @@ namespace Pewpew.Infrastructure.Factory
     public interface IBulletFactory: IService
     {
         public Bullet CreateBullet(Vector3 at, Quaternion faceTo);
-        public void CreateBulletPool(string bulletPrefabPath);
+        public void CreateBulletPool(string bulletPrefabPath, float Damage);
     }
 }
