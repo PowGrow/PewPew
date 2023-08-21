@@ -15,7 +15,7 @@ public class LobbyState : IPayloadedState<UiLobbyView>
 
     private void PlayButtonClickEventHandler()
     {
-        _stateMachine.Enter<LoadLevelState, float>(AssetLevels.LargeBorderSize);
+        _stateMachine.Enter<LoadLevelState, LoadLevelPayload>(new LoadLevelPayload(AssetLevels.MediumBorderSize,5));
     }
 
     public void Enter(UiLobbyView lobbyView)

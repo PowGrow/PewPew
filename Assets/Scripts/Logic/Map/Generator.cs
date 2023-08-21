@@ -12,6 +12,7 @@ namespace Pewpew.Logic.Map
 
         private IGameFactory _gameFactory;
         private int _asteroidDensity;
+        private GameObject _container;
 
         public Generator(IGameFactory gameFactory, int asteroidsDensity)
         {
@@ -21,6 +22,7 @@ namespace Pewpew.Logic.Map
 
         public void GenerateAsteroids(int mapRadius)
         {
+            _container = _gameFactory.CreateAsteroidContainer();
             _asteroidMap = InstantiateAsteroidMap(mapRadius);
             for (int x = -1 * mapRadius; x < mapRadius; x += _asteroidDensity)
             {
@@ -35,7 +37,7 @@ namespace Pewpew.Logic.Map
                     {
                         if(pointAsteroidScale >= type.Value)
                         {
-                            CreateAsteroid(at: (x, y), type.Key);
+                            CreateAsteroid(at: (x, y), type.Key, _container.transform);
                             break;
                         }
                     }
@@ -43,13 +45,13 @@ namespace Pewpew.Logic.Map
             }
         }
 
-        private void CreateAsteroid((int x,int y) at, AsteroidTypes type)
+        private void CreateAsteroid((int x,int y) at, AsteroidTypes type, Transform parent)
         {
             var delta = Convert.ToInt32(type);
             if (IsPlaceAvaliable(at, delta))
             {
                 PlaceAsteroid(at, delta);
-                _gameFactory.CreateAsteroid(new Vector3(at.x, 0, at.y), Quaternion.identity, type);
+                _gameFactory.CreateAsteroid(new Vector3(at.x, 0, at.y), Quaternion.identity, type, parent);
             }
 
         }

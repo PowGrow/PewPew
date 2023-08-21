@@ -28,25 +28,14 @@ namespace Pewpew.Infrastructure.Factory
             return border;
         }
 
-        public GameObject CreateAsteroid(Vector3 at, Quaternion rotation, AsteroidTypes type)
+        public GameObject CreateAsteroid(Vector3 at, Quaternion rotation, AsteroidTypes type, Transform parent)
         {
-            GameObject asteroid;
-            switch (type)
-            {
-                case AsteroidTypes.Small:
-                    asteroid = _assets.Instantiate(AssetPath.AsteroidSmallPrefabPath, at, faceTo: rotation);
-                    break;
-                case AsteroidTypes.Medium:
-                    asteroid = _assets.Instantiate(AssetPath.AsteroidMediumPrefabPath, at, faceTo: rotation);
-                    break;
-                case AsteroidTypes.Large:
-                    asteroid = _assets.Instantiate(AssetPath.AsteroidLargePrefabPath, at, faceTo: rotation);
-                    break;
-                default:
-                    asteroid = _assets.Instantiate(AssetPath.AsteroidSmallPrefabPath, at, faceTo: rotation);
-                    break;
-            }
-            return asteroid;
+            return _assets.Instantiate(AssetPath.AsteroidPrefabPaths[type], at, faceTo: rotation, parent); ;
+        }
+
+        public GameObject CreateAsteroidContainer()
+        {
+            return _assets.Instantiate(AssetPath.AsteroidContainerPrefabPath);
         }
     }
 }

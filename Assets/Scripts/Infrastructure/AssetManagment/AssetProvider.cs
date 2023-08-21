@@ -21,5 +21,11 @@ namespace Pewpew.Infrastructure.AssetManagment
             return Object.Instantiate(prefab, at, faceTo);
         }
 
+        public GameObject Instantiate(string path, Vector3 at, Quaternion faceTo, Transform parent)
+        {
+            var prefab = Resources.Load<GameObject>(path);
+            return Object.Instantiate(prefab, at, faceTo,parent);
+        }
+
     }
 }

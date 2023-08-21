@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Pewpew.Infrastructure.States
 {
-    internal class LoadLevelState : IPayloadedState<float>
+    internal class LoadLevelState : IPayloadedState<LoadLevelPayload>
     {
         private const string InitialPointTag = "InitialPoint";
         private const string BorderInitialPointTag = "BorderInitialPoint";
@@ -18,8 +18,8 @@ namespace Pewpew.Infrastructure.States
         private readonly IGameFactory _gameFactory;
         private readonly IBulletFactory _bulletFactory;
 
-        private float _levelSize;
-        private Generator _levelGenerator;
+        private float _borderScaleConjuctor;
+        private int _asteroidDensity;
 
 
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory, IBulletFactory bulletFactory)
@@ -31,9 +31,10 @@ namespace Pewpew.Infrastructure.States
             _bulletFactory = bulletFactory;
         }
 
-        public void Enter(float levelSize)
+        public void Enter(LoadLevelPayload payload)
         {
-            _levelSize = levelSize;
+            _asteroidDensity = payload.AsteroidDensity;
+            _borderScaleConjuctor = payload.BorderSize;
             _curtain.Show();
             _sceneLoader.Load(AssetLevels.GameLevelName, OnLoaded);
         }
@@ -44,35 +45,40 @@ namespace Pewpew.Infrastructure.States
         }
         private void OnLoaded()
         {
-            GameObject player = _gameFactory.CreatePlayer(at: GameObject.FindWithTag(InitialPointTag));
-            var playerInfo = player.GetComponent<Stats>();
-            CreateBulletPool(playerInfo.Weapon, playerInfo.Damage);
-            player.GetComponent<Guns>().Initialize();
-            player.GetComponent<Health>().Initialize();
-            GameObject border = _gameFactory.CreateGameBorder(_levelSize, at: GameObject.FindWithTag(BorderInitialPointTag));
-            CameraFollow(player);
-
-            _levelGenerator = new Generator(_gameFactory,5);
-            _levelGenerator.GenerateAsteroids(500);
+            GameObject player = InstantiatePlayer(_gameFactory);
+            GameObject border = _gameFactory.CreateGameBorder(_borderScaleConjuctor, at: GameObject.FindWithTag(BorderInitialPointTag));
+            Generator mapGenerator = InstantiateAsteroidMap(_gameFactory, border.transform.localScale.x, _asteroidDensity);
 
             _stateMachine.Enter<GameLoopState>();
         }
 
+        private Generator InstantiateAsteroidMap(IGameFactory gameFactory, float borderScale, int asteroidDensity)
+        {
+            Generator mapGenerator;
+            if (asteroidDensity != 0)
+            {
+                mapGenerator = new Generator(gameFactory, asteroidDensity);
+                mapGenerator.GenerateAsteroids(Convert.ToInt32(borderScale * AssetLevels.BorderSizeСoefficient));
+                return mapGenerator;
+            }
+            return null;
+        }
+
+        private GameObject InstantiatePlayer(IGameFactory gameFactory)
+        {
+            var player = gameFactory.CreatePlayer(at: GameObject.FindWithTag(InitialPointTag));
+            var playerInfo = player.GetComponent<Stats>();
+            CreateBulletPool(playerInfo.Weapon, playerInfo.Damage);
+            player.GetComponent<Guns>().Initialize();
+            player.GetComponent<Health>().Initialize();
+            CameraFollow(player);
+            return player;
+        }
+
         private void CreateBulletPool(WeaponType weaponType, float Damage)
         {
-            switch (weaponType)
-            {
-                case WeaponType.MachineGun:
-                    _bulletFactory.CreateBulletPool(AssetPath.BulletPrefabPath, Damage);
-                    break;
-                case WeaponType.RocketLauncher:
-                    _bulletFactory.CreateBulletPool(AssetPath.RocketPrefabPath, Damage);
-                    break;
-                case WeaponType.Laser:
-                    break;
-                default:
-                    break;
-            }
+            if (AssetPath.WeaponAmmoPrefabPaths[weaponType] != null)
+                _bulletFactory.CreateBulletPool(AssetPath.WeaponAmmoPrefabPaths[weaponType], Damage);
         }
 
         private void CameraFollow(GameObject gameObject)
@@ -81,11 +87,5 @@ namespace Pewpew.Infrastructure.States
                 .GetComponent<CameraFollow>()
                 .Follow(gameObject);
         }
-
-        private void GeneratePerlinNoise()
-        {
-
-        }
-
     }
 }
