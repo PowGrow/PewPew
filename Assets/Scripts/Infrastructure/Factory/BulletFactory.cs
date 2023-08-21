@@ -36,19 +36,20 @@ namespace Pewpew.Infrastructure.Factory
         {
             if( _bulletsPool.Count == 0 )
             {
+                var bulletContainer = _assets.Instantiate(AssetPath.BulletContainerPrefabPath);
                 for (int i = 0; i < _poolSize; i++)
                 {
-                    var bullet = InstantiateBullet(bulletPrefabPath);
+                    var bullet = InstantiateBullet(bulletPrefabPath, bulletContainer.transform);
                     bullet.Damage = Damage;
                     _bulletsPool.Add(bullet);
                 }
             }
         }
 
-        private Bullet InstantiateBullet(string bulletPrefabPath)
+        private Bullet InstantiateBullet(string bulletPrefabPath, Transform parent)
         {
-            Bullet bullet = _assets.Instantiate(bulletPrefabPath).GetComponent<Bullet>();
-            bullet.transform.position = new Vector3(0, -100, 0);
+            var at = new Vector3(0, -100, 0);
+            Bullet bullet = _assets.Instantiate(bulletPrefabPath, at, Quaternion.identity, parent).GetComponent<Bullet>();
             return bullet;
         }
     }
