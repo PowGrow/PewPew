@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 namespace Pewpew.Infrastructure.AssetManagment
 {
     public class AssetProvider : IAssetProvider
@@ -25,6 +26,18 @@ namespace Pewpew.Infrastructure.AssetManagment
         {
             var prefab = Resources.Load<GameObject>(path);
             return Object.Instantiate(prefab, at, faceTo,parent);
+        }
+
+        public Type Instantiate<Type>(string path, Vector3 at, Quaternion faceTo, Transform parent) where Type: Object
+        {
+            var type = Resources.Load<Type>(path);
+            return Object.Instantiate(type, at, faceTo, parent);
+        }
+
+        public Type Instantiate<Type>(string path, Vector3 at) where Type : Object
+        {
+            var type = Resources.Load<Type>(path);
+            return Object.Instantiate(type, at, Quaternion.identity);
         }
 
     }

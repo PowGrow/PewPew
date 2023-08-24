@@ -8,15 +8,17 @@ namespace Pewpew.Logic.Inventory
         public string Name { get; private set; }
         public string Description { get; private set; }
         public string Sprite { get; private set; }
+        public GameObject Prefab {get; private set;}
         public bool IsStackable { get; private set; }
         public int StackSize { get; private set; }
 
-        public ItemInfo(int id, string name, string description, string sprite, bool isStackable = false, int stackSize = 1)
+        public ItemInfo(int id, string name, string description, string sprite, GameObject prefab, bool isStackable = false, int stackSize = 1)
         {
             Id = id;
             Name = name;
             Description = description;
             Sprite = sprite;
+            Prefab = prefab;
             IsStackable = isStackable;
             StackSize = stackSize;
 

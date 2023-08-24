@@ -1,21 +1,20 @@
-﻿using Assets.Scripts.Logic.Inventory;
-using Pewpew.Logic.Inventory;
+﻿using Pewpew.Logic.Inventory;
 using System.Collections.Generic;
 
 namespace Pewpew.Logic.Loot
 {
-    public class LootTable<TEntity> where TEntity : class, IEntity
+    public class LootTable
     {
-        public Dictionary<TEntity, Drop> Table { get; private set; }
+        public Dictionary<string, Drop> Table { get; private set; }
 
         private Items _items;
         public LootTable(Items items)
         {
             _items = items;
-            Table = new Dictionary<TEntity, Drop>();
+            Table = new Dictionary<string, Drop>();
         }
 
-        public void Add(TEntity entity, Drop chancesToDrop)
+        public void Add(string entity, Drop chancesToDrop)
         {
             if (Table.ContainsKey(entity))
                 Replace(entity, chancesToDrop);
@@ -23,7 +22,7 @@ namespace Pewpew.Logic.Loot
                 Table.Add(entity, chancesToDrop);
         }
 
-        public void Add(TEntity entity, ItemInfo info, float chance)
+        public void Add(string entity, ItemInfo info, float chance)
         {
             if (Table.ContainsKey(entity))
             {
@@ -37,9 +36,9 @@ namespace Pewpew.Logic.Loot
             }
         }
 
-        public void Add(TEntity entity, int itemId, float chance)
+        public void Add(string entity, int itemId, float chance)
         {
-            if(Table.ContainsKey(entity))
+            if (Table.ContainsKey(entity))
             {
                 var drop = Table[entity];
                 drop.Add(_items.GetItemInfo(itemId), chance);
@@ -51,7 +50,7 @@ namespace Pewpew.Logic.Loot
             }
         }
 
-        private void Replace(TEntity entity, Drop chancesToDrop)
+        private void Replace(string entity, Drop chancesToDrop)
         {
             Table[entity] = chancesToDrop;
         }

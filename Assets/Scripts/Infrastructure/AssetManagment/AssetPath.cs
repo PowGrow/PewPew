@@ -15,9 +15,9 @@ namespace Pewpew.Infrastructure.AssetManagment
         public const string BulletContainerPrefabPath = "Prefabs/Ammo/BULLET-CONTAINER";
 
         public const string AsteroidPrefabPath = "Prefabs/Asteroids/Asteroid";
-        public const string AsteroidSmallPrefabPath = "Prefabs/Asteroids/Asteroid_small Variant";
-        public const string AsteroidMediumPrefabPath = "Prefabs/Asteroids/Asteroid_medium Variant";
-        public const string AsteroidLargePrefabPath = "Prefabs/Asteroids/Asteroid_large Variant";
+        public const string AsteroidSmallPrefabPath = "Prefabs/Asteroids/Asteroid_small";
+        public const string AsteroidMediumPrefabPath = "Prefabs/Asteroids/Asteroid_medium";
+        public const string AsteroidLargePrefabPath = "Prefabs/Asteroids/Asteroid_large";
         public const string AsteroidContainerPrefabPath = "Prefabs/Asteroids/ASTEROID-CONTAINER";
 
         public static readonly Dictionary<AsteroidTypes, string> AsteroidPrefabPaths = new Dictionary<AsteroidTypes, string>()

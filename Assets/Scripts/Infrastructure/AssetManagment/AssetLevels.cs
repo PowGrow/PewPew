@@ -7,6 +7,8 @@ namespace Pewpew.Infrastructure.AssetManagment
     {
         public const string GameLevelName = "Game";
 
+        public const int   LootDropQuantity = 101;
+
         public const float BorderSizeСoefficient = 188.5f;
 
         public const float SmallBorderSize = 0f;

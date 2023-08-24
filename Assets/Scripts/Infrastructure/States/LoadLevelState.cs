@@ -1,8 +1,11 @@
 ﻿using Pewpew.Infrastructure.AssetManagment;
 using Pewpew.Infrastructure.Factory;
+using Pewpew.Logic.Inventory;
+using Pewpew.Logic.Loot;
 using Pewpew.Logic.Map;
 using Pewpew.Player;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pewpew.Infrastructure.States
@@ -18,8 +21,10 @@ namespace Pewpew.Infrastructure.States
         private readonly IGameFactory _gameFactory;
         private readonly IBulletFactory _bulletFactory;
 
-        private float _borderScaleConjuctor;
+        private LootTable _lootTable;
+        private Items _items;
         private int _asteroidDensity;
+        private float _borderScaleConjuctor;
 
 
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory, IBulletFactory bulletFactory)
@@ -33,10 +38,13 @@ namespace Pewpew.Infrastructure.States
 
         public void Enter(LoadLevelPayload payload)
         {
+            _lootTable = payload.LootTable;
+            _items = payload.Items;
             _asteroidDensity = payload.AsteroidDensity;
             _borderScaleConjuctor = payload.BorderSize;
             _curtain.Show();
             _sceneLoader.Load(AssetLevels.GameLevelName, OnLoaded);
+
         }
 
         public void Exit()
@@ -47,19 +55,24 @@ namespace Pewpew.Infrastructure.States
         {
             GameObject player = InstantiatePlayer(_gameFactory);
             GameObject border = _gameFactory.CreateGameBorder(_borderScaleConjuctor, at: GameObject.FindWithTag(BorderInitialPointTag));
-            Generator mapGenerator = InstantiateAsteroidMap(_gameFactory, border.transform.localScale.x, _asteroidDensity);
+            List<Asteroid> asteroids = GenerateAsteroidMap(_gameFactory, border.transform.localScale.x, _asteroidDensity);
+            LootDistributor distributor = InstantiateLootDistributor(_gameFactory, _lootTable,_items,asteroids);
 
             _stateMachine.Enter<GameLoopState>();
         }
 
-        private Generator InstantiateAsteroidMap(IGameFactory gameFactory, float borderScale, int asteroidDensity)
+        private LootDistributor InstantiateLootDistributor(IGameFactory gameFactory, LootTable lootTable, Items items, List<Asteroid> asteroids)
+        {
+            return new LootDistributor(gameFactory, lootTable, items, asteroids);
+        }
+
+        private List<Asteroid> GenerateAsteroidMap(IGameFactory gameFactory, float borderScale, int asteroidDensity)
         {
             Generator mapGenerator;
             if (asteroidDensity != 0)
             {
                 mapGenerator = new Generator(gameFactory, asteroidDensity);
-                mapGenerator.GenerateAsteroids(Convert.ToInt32(borderScale * AssetLevels.BorderSizeСoefficient));
-                return mapGenerator;
+                return mapGenerator.GenerateAsteroids(Convert.ToInt32(borderScale * AssetLevels.BorderSizeСoefficient));
             }
             return null;
         }
@@ -71,6 +84,7 @@ namespace Pewpew.Infrastructure.States
             CreateBulletPool(playerInfo.Weapon, playerInfo.Damage);
             player.GetComponent<Guns>().Initialize();
             player.GetComponent<Health>().Initialize();
+            player.GetComponent<PlayerInventory>().Initialize(_items);
             CameraFollow(player);
             return player;
         }

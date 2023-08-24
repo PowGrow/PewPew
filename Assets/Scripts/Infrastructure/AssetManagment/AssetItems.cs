@@ -3,7 +3,6 @@
     public static class AssetItems
     {
         public const string ItemsPath = "Textures/Items/";
-        public const string CopperOre = ItemsPath + "copper_ore";
-        public const string IronOre = ItemsPath + "iron_ore";
+        public const string ItemsPrefabPath = "Prefabs/Items/";
     }
 }

@@ -1,9 +1,10 @@
 ﻿using Pewpew.Logic.Inventory;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Pewpew.Logic.Loot
 {
-    public class Drop
+    public class Drop: IEnumerable
     {
         public Dictionary<ItemInfo,float> Chance { get; private set; }
         public Drop()
@@ -22,6 +23,11 @@ namespace Pewpew.Logic.Loot
         private void Replace(ItemInfo itemInfo, float chance)
         {
             Chance[itemInfo] = chance;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return Chance.GetEnumerator();
         }
     }
 }

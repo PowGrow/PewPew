@@ -3,7 +3,7 @@ using UnityEngine;
 public class RendererSwitch : MonoBehaviour
 {
     [SerializeField]
-    private MeshCollider MeshCollider;
+    private Collider Collider;
     [SerializeField]
     private GameObject Particles;
     [SerializeField]
@@ -27,7 +27,7 @@ public class RendererSwitch : MonoBehaviour
 
     private void SetComponent(bool enable)
     {
-        MeshCollider.enabled = enable;
+        Collider.enabled = enable;
         Particles.SetActive(enable);
         Asteroid.enabled = enable;
     }

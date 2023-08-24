@@ -1,9 +1,9 @@
-﻿using Pewpew.Logic.Inventory;
-using PewPew.Infrastructure.AssetManagment;
+﻿using PewPew.Infrastructure.AssetManagment;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-namespace Assets.Scripts.Logic.Inventory
+namespace Pewpew.Logic.Inventory
 {
     public class Items
     {
@@ -14,8 +14,17 @@ namespace Assets.Scripts.Logic.Inventory
             ItemsInfo = itemsInfo.ToHashSet();
 
             //TEST_ITEMS
-            ItemsInfo.Add(new ItemInfo(1, "Copper Ore", "Just copper ore", AssetItems.CopperOre, true, 100));
-            ItemsInfo.Add(new ItemInfo(2, "Iron Ore", "Just iron ore", AssetItems.IronOre, true, 100));
+            ItemsInfo.Add(new ItemInfo(1, "Copper Ore", "Just copper ore", "Copper Ore", Resources.Load<GameObject>(AssetItems.ItemsPrefabPath + "Copper Ore"), true, 100));
+            ItemsInfo.Add(new ItemInfo(2, "Iron Ore", "Just iron ore", "Iron Ore", Resources.Load<GameObject>(AssetItems.ItemsPrefabPath + "Iron Ore"), true, 100));
+        }
+
+        public Items()
+        {
+            ItemsInfo = new HashSet<ItemInfo>
+            {
+                new ItemInfo(1, "Copper Ore", "Just copper ore", "Copper Ore", Resources.Load<GameObject>(AssetItems.ItemsPrefabPath + "Copper Ore"), true, 100),
+                new ItemInfo(2, "Iron Ore", "Just iron ore", "Iron Ore", Resources.Load<GameObject>(AssetItems.ItemsPrefabPath + "Iron Ore"), true, 100)
+            };
         }
 
         public ItemInfo GetItemInfo(int itemId)

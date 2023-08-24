@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
+    public event Action<Asteroid, string, Vector3> OnLootDroping; 
+
     [SerializeField]
     private MeshRenderer MeshRenderer;
+    [SerializeField]
+    private Collider asteroidCollider;
     [SerializeField]
     private ParticleSystem DestroyParticles;
     [SerializeField]
@@ -14,6 +18,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     [Range(0, 5)]
     private int Health;
+    protected string _type = "Asteroid";
 
     [ContextMenu("TestDamage")]
     public void TestDamage()
@@ -31,8 +36,10 @@ public class Asteroid : MonoBehaviour
 
     private void Destruct()
     {
+        asteroidCollider.enabled = false;
         DestroyParticles.Play();
         StartCoroutine(HideAsteroid(0.5f));
+        DropLoot();
         StartCoroutine(DestoryAsteroid(1.5f));
     }
 
@@ -46,5 +53,10 @@ public class Asteroid : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         MeshRenderer.enabled = false;
+    }
+
+    public void DropLoot()
+    {
+        OnLootDroping?.Invoke(this, _type, transform.position);
     }
 }

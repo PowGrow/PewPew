@@ -1,4 +1,5 @@
 ﻿using Pewpew.Infrastructure.Services;
+using Pewpew.Logic.Inventory;
 using Pewpew.Logic.Map;
 using UnityEngine;
 
@@ -9,7 +10,8 @@ namespace Pewpew.Infrastructure.Factory
         GameObject CreatePlayer(GameObject at);
         GameObject CreateLobbyHud();
         GameObject CreateGameBorder(float borderSize, GameObject at);
-        GameObject CreateAsteroid(Vector3 at, Quaternion rotation, AsteroidTypes type, Transform parent);
+        Type CreateAsteroid<Type>(Vector3 at, Quaternion rotation, AsteroidTypes type, Transform parent) where Type : Object;
         GameObject CreateAsteroidContainer();
+        GameObject CreateLoot(ItemInfo itemInfo, Vector3 at);
     }
 }

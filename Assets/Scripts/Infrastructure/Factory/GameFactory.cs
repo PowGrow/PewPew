@@ -1,5 +1,7 @@
 ﻿using Pewpew.Infrastructure.AssetManagment;
+using Pewpew.Logic.Inventory;
 using Pewpew.Logic.Map;
+using PewPew.Infrastructure.AssetManagment;
 using UnityEngine;
 
 namespace Pewpew.Infrastructure.Factory
@@ -28,14 +30,21 @@ namespace Pewpew.Infrastructure.Factory
             return border;
         }
 
-        public GameObject CreateAsteroid(Vector3 at, Quaternion rotation, AsteroidTypes type, Transform parent)
+        public Type CreateAsteroid<Type>(Vector3 at, Quaternion rotation, AsteroidTypes type, Transform parent) where Type: Object
         {
-            return _assets.Instantiate(AssetPath.AsteroidPrefabPaths[type], at, faceTo: rotation, parent); ;
+            return _assets.Instantiate<Type>(AssetPath.AsteroidPrefabPaths[type], at, faceTo: rotation, parent);
         }
 
         public GameObject CreateAsteroidContainer()
         {
             return _assets.Instantiate(AssetPath.AsteroidContainerPrefabPath);
+        }
+
+        public GameObject CreateLoot(ItemInfo itemInfo, Vector3 at)
+        {
+            var loot = _assets.Instantiate<Loot>(AssetItems.ItemsPrefabPath + itemInfo.Name, at);
+            loot.SetItem(new Item(itemInfo.Id, Random.Range(1, AssetLevels.LootDropQuantity)));
+            return loot.gameObject;
         }
     }
 }
