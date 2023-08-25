@@ -56,7 +56,7 @@ namespace Pewpew.Logic.Map
             if (IsPlaceAvaliable(at, delta))
             {
                 PlaceAsteroid(at, delta);
-                return _gameFactory.CreateAsteroid<Asteroid>(new Vector3(at.x, 0, at.y), Quaternion.identity, type, parent);
+                return _gameFactory.CreateAsteroid<Asteroid>(new Vector3(at.x, 0, at.y), Quaternion.Euler(new Vector3(UnityEngine.Random.Range(0,359), UnityEngine.Random.Range(0,359), UnityEngine.Random.Range(0,359))), type, parent);
             }
             return null;
         }
