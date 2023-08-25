@@ -1,12 +1,7 @@
-using UnityEngine;
-
 namespace Pewpew.Player
 {
-    public class Stats : MonoBehaviour
+    public class Stats
     {
-        [SerializeField]
-        private Ship ShipInfo;
-
         public float Speed { get; private set; }
         public float Torque { get; private set; }
         public float Health { get; private set; }
@@ -19,26 +14,28 @@ namespace Pewpew.Player
         public float AmmoStock { get; private set; }
         public float FireDistance { get; private set; }
         public float FireSpread { get; private set; }
+        public int CargoSize { get; private set; }
 
-        private void Awake()
+        public Stats(Ship shipStats)
         {
-            SetInitialShipStats();
+            SetInitialShipStats(shipStats);
         }
 
-        private void SetInitialShipStats()
+        private void SetInitialShipStats(Ship shipStats)
         {
-            Speed = ShipInfo.Speed;
-            Torque = ShipInfo.Torque;
-            Health = ShipInfo.Health;
-            Armor = ShipInfo.Armor;
-            Shields = ShipInfo.Shields;
-            Damage = ShipInfo.Damage;
-            Weapon = ShipInfo.Weapon;
-            RateOfFire = ShipInfo.RateOfFire;
-            ReloadTime = ShipInfo.ReloadTime;
-            AmmoStock = ShipInfo.AmmoStock;
-            FireDistance = ShipInfo.FireDistance;
-            FireSpread = ShipInfo.FireSpread;
+            Speed = shipStats.Speed;
+            Torque = shipStats.Torque;
+            Health = shipStats.Health;
+            Armor = shipStats.Armor;
+            Shields = shipStats.Shields;
+            Damage = shipStats.Damage;
+            Weapon = shipStats.Weapon;
+            RateOfFire = shipStats.RateOfFire;
+            ReloadTime = shipStats.ReloadTime;
+            AmmoStock = shipStats.AmmoStock;
+            FireDistance = shipStats.FireDistance;
+            FireSpread = shipStats.FireSpread;
+            CargoSize = shipStats.CargoSize;
         }
     }
 }

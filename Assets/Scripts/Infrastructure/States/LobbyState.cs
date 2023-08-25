@@ -1,4 +1,3 @@
-using Pewpew.Logic.Inventory;
 using Pewpew.Infrastructure.AssetManagment;
 using Pewpew.Infrastructure.States;
 using Pewpew.Logic.Loot;
@@ -17,11 +16,10 @@ public class LobbyState : IPayloadedState<UiLobbyView>
 
     private void PlayButtonClickEventHandler()
     {
-        var testItems = new Items();
-        var testLootTable = new LootTable(testItems);
+        var testLootTable = new LootTable();
         testLootTable.Add("Asteroid", 1, 20);
         testLootTable.Add("Asteroid", 2, 20);
-        _stateMachine.Enter<LoadLevelState, LoadLevelPayload>(new LoadLevelPayload(AssetLevels.MediumBorderSize,5, testLootTable,testItems));
+        _stateMachine.Enter<LoadLevelState, LoadLevelPayload>(new LoadLevelPayload(AssetLevels.MediumBorderSize,5, testLootTable));
     }
 
     public void Enter(UiLobbyView lobbyView)

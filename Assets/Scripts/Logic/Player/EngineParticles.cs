@@ -3,25 +3,25 @@ using Pewpew.Services.Inputs;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EngineParticles : MonoBehaviour
+public class EngineParticles
 {
-    [SerializeField]
-    private List<TrailRenderer> EngineTrails;
-    [SerializeField]
-    private Light EngineLight;
-    [SerializeField]
-    private Transform ShipTransform;
-    [SerializeField]
-    private List<float> TrailsOnAngles = new List<float>() { 45f,315f,135f,225f };
+    private List<float> _trailsAngles;
+    private List<TrailRenderer> _engineTrails;
+    private Light _engineLight;
+    private Transform _shipTransform;
 
     private IInputService _inputService;
 
-    private void Awake()
+    public EngineParticles(IInputService inputService, List<float> trailsAngles, List<TrailRenderer> engineTrails, Light engineLight, Transform shipTransform)
     {
-        _inputService = AllServices.Container.Single<IInputService>();
+        _inputService = inputService;
+        _trailsAngles = trailsAngles;
+        _engineTrails = engineTrails;
+        _engineLight = engineLight;
+        _shipTransform = shipTransform;
     }
 
-    private void FixedUpdate()
+    public void Execute()
     {
         OnPlayerMove();
     }
@@ -35,9 +35,9 @@ public class EngineParticles : MonoBehaviour
     private void ControlLight()
     {
         if (_inputService.zAxis != 0 || _inputService.xAxis != 0)
-            EngineLight.enabled = true;
+            _engineLight.enabled = true;
         else
-            EngineLight.enabled = false;
+            _engineLight.enabled = false;
     }
 
     private void ControlTrails()
@@ -52,9 +52,9 @@ public class EngineParticles : MonoBehaviour
 
     private bool IsTorqueMatchTrailsAngles()
     {
-        var shipTorque = ShipTransform.rotation.eulerAngles.y;
-        return (shipTorque <= TrailsOnAngles[0] || shipTorque >= TrailsOnAngles[1]) ||
-                (shipTorque >= TrailsOnAngles[2] && shipTorque <= TrailsOnAngles[3]);
+        var shipTorque = _shipTransform.rotation.eulerAngles.y;
+        return (shipTorque <= _trailsAngles[0] || shipTorque >= _trailsAngles[1]) ||
+                (shipTorque >= _trailsAngles[2] && shipTorque <= _trailsAngles[3]);
     }
 
     private bool IsInputNotZero()
@@ -64,7 +64,7 @@ public class EngineParticles : MonoBehaviour
 
     private void SetTrails(bool emitting)
     {
-        foreach (TrailRenderer trail in EngineTrails)
+        foreach (TrailRenderer trail in _engineTrails)
             trail.emitting = emitting;
     }
 }

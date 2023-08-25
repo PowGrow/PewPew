@@ -1,21 +1,18 @@
 using Pewpew.Player;
-using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Health
 {
-    [SerializeField]
-    private Stats ShipInfo;
     public float MaximumHealth { get; private set; }
     public float CurrentHealth { get; private set; }
     public float Armor { get; private set; }
     public float Shields { get; private set; }
 
-    public void Initialize()
+    public Health(Stats stats)
     {
-        MaximumHealth = ShipInfo.Health;
+        MaximumHealth = stats.Health;
         CurrentHealth = MaximumHealth;
-        Armor = ShipInfo.Armor;
-        Shields = ShipInfo.Shields;
+        Armor = stats.Armor;
+        Shields = stats.Shields;
     }
 
     public void ApplyDamage(float damage)

@@ -17,13 +17,13 @@ public class Loot : MonoBehaviour
         if (!_isActive)
             return;
 
-        PlayerInventory playerInventory;
-        if(other.TryGetComponent(out playerInventory))
+        Player player;
+        if(other.TryGetComponent(out player))
         {
             Debug.Log($"TO ADD: {_item.Id}: {_item.Quantity}");
-            _item.Quantity = playerInventory.Cargo.TryToAddItem(_item);
+            _item.Quantity = player.Cargo.TryToAddItem(_item);
             Debug.Log($"ADDED : {_item.Id}: {_item.Quantity}");
-            Debug.Log($"SPACE LEFT: {playerInventory.Cargo.Size - playerInventory.Cargo.Items.Count}");
+            Debug.Log($"SPACE LEFT: {player.Cargo.Size - player.Cargo.Items.Count}");
         }
 
         if (_item.Quantity <= 0)

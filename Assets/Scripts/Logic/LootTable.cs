@@ -1,4 +1,6 @@
-﻿using Pewpew.Logic.Inventory;
+﻿using Pewpew.Infrastructure.Services;
+using Pewpew.Infrastructure.Services.Inventory;
+using Pewpew.Logic.Inventory;
 using System.Collections.Generic;
 
 namespace Pewpew.Logic.Loot
@@ -7,10 +9,13 @@ namespace Pewpew.Logic.Loot
     {
         public Dictionary<string, Drop> Table { get; private set; }
 
-        private Items _items;
-        public LootTable(Items items)
+        private Items _itemsInfo;
+
+        private IItemsInfoService _itemsInfoService;
+        public LootTable()
         {
-            _items = items;
+            _itemsInfoService = AllServices.Container.Single<IItemsInfoService>();
+            _itemsInfo = _itemsInfoService.ItemsInfo;
             Table = new Dictionary<string, Drop>();
         }
 
@@ -41,12 +46,12 @@ namespace Pewpew.Logic.Loot
             if (Table.ContainsKey(entity))
             {
                 var drop = Table[entity];
-                drop.Add(_items.GetItemInfo(itemId), chance);
+                drop.Add(_itemsInfo.GetItemInfo(itemId), chance);
             }
             else
             {
                 Table.Add(entity, new Drop());
-                Table[entity].Add(_items.GetItemInfo(itemId), chance);
+                Table[entity].Add(_itemsInfo.GetItemInfo(itemId), chance);
             }
         }
 

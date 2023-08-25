@@ -1,5 +1,6 @@
 using Pewpew.Infrastructure.Factory;
 using Pewpew.Infrastructure.Services;
+using Pewpew.Infrastructure.Services.Inventory;
 using System;
 using System.Collections.Generic;
 
@@ -15,7 +16,7 @@ namespace Pewpew.Infrastructure.States
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, services.Single<IGameFactory>(), services.Single<IBulletFactory>()),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, services.Single<IGameFactory>(), services.Single<IBulletFactory>(), services.Single<IItemsInfoService>()),
                 [typeof(GameLoopState)] = new GameLoopState(this),
                 [typeof(LoadLobbyState)] = new LoadLobbyState(this, sceneLoader, curtain, services.Single<IGameFactory>()),
                 [typeof(LobbyState)] = new LobbyState(this, curtain),

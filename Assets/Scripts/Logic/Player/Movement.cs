@@ -5,34 +5,29 @@ using UnityEngine;
 
 namespace Pewpew.Player
 {
-    public class PlayerMove : MonoBehaviour
-    {
-        [SerializeField]
-        private Stats ShipInfo;
-        [SerializeField]
-        private Rigidbody ShipRigidbody;
-        [SerializeField]
-        private Transform ShipTransform;
-        [SerializeField]
-        private float Speed;
-        [SerializeField]
-        private float DeltaTorque;
-
+    public class Movement
+    { 
         private IInputService _inputService;
         private Camera _mainCamera;
 
-        private void Awake()
+        private Stats _stats;
+        private Rigidbody _shipRigidbody;
+        private Transform _shipTransform;
+        private float _deltaTorque;
+        public Movement(Stats stats, Rigidbody shipRigidbody, Transform shipTransform, float deltaTorque)
         {
+            _stats = stats;
+            _shipRigidbody = shipRigidbody;
+            _shipTransform = shipTransform;
+            _deltaTorque = deltaTorque;
             _mainCamera = Camera.main;
             _inputService = AllServices.Container.Single<IInputService>();
-            Speed = ShipInfo.Speed;
-            DeltaTorque = ShipInfo.Torque;
         }
 
-        private void FixedUpdate()
+        public void Execute()
         {
-            Move(ShipRigidbody);
-            Rotate(ShipTransform);
+            Move(_shipRigidbody);
+            Rotate(_shipTransform);
         }
 
         private void Move(Rigidbody shipRigidbody)
@@ -41,7 +36,7 @@ namespace Pewpew.Player
             {
                 var movementVector = new Vector3(_inputService.xAxis,0, _inputService.zAxis);
                 movementVector.Normalize();
-                movementVector *= shipRigidbody.mass * Speed * Time.deltaTime;
+                movementVector *= shipRigidbody.mass * _stats.Speed * Time.deltaTime;
                 shipRigidbody.AddForce(movementVector);
             }
         }
@@ -50,7 +45,7 @@ namespace Pewpew.Player
         {
             var lookAtRotation = LookRotation(shipTransform.transform);
             if (Quaternion.Angle(shipTransform.rotation, lookAtRotation) > Constants.Epsilon)
-                shipTransform.rotation = Quaternion.RotateTowards(shipTransform.rotation, lookAtRotation, DeltaTorque * Time.deltaTime);
+                shipTransform.rotation = Quaternion.RotateTowards(shipTransform.rotation, lookAtRotation, _deltaTorque * Time.deltaTime);
         }
 
         private Quaternion LookRotation(Transform shipTransform)

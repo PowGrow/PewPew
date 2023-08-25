@@ -17,5 +17,6 @@ namespace Pewpew.Player
         public float AmmoStock;
         public float FireDistance;
         public float FireSpread;
+        public int CargoSize;
     }
 }

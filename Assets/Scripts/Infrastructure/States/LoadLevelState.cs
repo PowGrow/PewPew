@@ -1,5 +1,6 @@
 ﻿using Pewpew.Infrastructure.AssetManagment;
 using Pewpew.Infrastructure.Factory;
+using Pewpew.Infrastructure.Services.Inventory;
 using Pewpew.Logic.Inventory;
 using Pewpew.Logic.Loot;
 using Pewpew.Logic.Map;
@@ -20,26 +21,26 @@ namespace Pewpew.Infrastructure.States
         private readonly LoadingCurtain _curtain;
         private readonly IGameFactory _gameFactory;
         private readonly IBulletFactory _bulletFactory;
+        private readonly IItemsInfoService _itemsInfoService;
 
         private LootTable _lootTable;
-        private Items _items;
         private int _asteroidDensity;
         private float _borderScaleConjuctor;
 
 
-        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory, IBulletFactory bulletFactory)
+        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory, IBulletFactory bulletFactory, IItemsInfoService itemsInfoService)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _curtain = curtain;
             _gameFactory = gameFactory;
             _bulletFactory = bulletFactory;
+            _itemsInfoService = itemsInfoService;
         }
 
         public void Enter(LoadLevelPayload payload)
         {
             _lootTable = payload.LootTable;
-            _items = payload.Items;
             _asteroidDensity = payload.AsteroidDensity;
             _borderScaleConjuctor = payload.BorderSize;
             _curtain.Show();
@@ -56,7 +57,7 @@ namespace Pewpew.Infrastructure.States
             GameObject player = InstantiatePlayer(_gameFactory);
             GameObject border = _gameFactory.CreateGameBorder(_borderScaleConjuctor, at: GameObject.FindWithTag(BorderInitialPointTag));
             List<Asteroid> asteroids = GenerateAsteroidMap(_gameFactory, border.transform.localScale.x, _asteroidDensity);
-            LootDistributor distributor = InstantiateLootDistributor(_gameFactory, _lootTable,_items,asteroids);
+            LootDistributor distributor = InstantiateLootDistributor(_gameFactory, _lootTable,_itemsInfoService.ItemsInfo,asteroids);
 
             _stateMachine.Enter<GameLoopState>();
         }
@@ -80,19 +81,8 @@ namespace Pewpew.Infrastructure.States
         private GameObject InstantiatePlayer(IGameFactory gameFactory)
         {
             var player = gameFactory.CreatePlayer(at: GameObject.FindWithTag(InitialPointTag));
-            var playerInfo = player.GetComponent<Stats>();
-            CreateBulletPool(playerInfo.Weapon, playerInfo.Damage);
-            player.GetComponent<Guns>().Initialize();
-            player.GetComponent<Health>().Initialize();
-            player.GetComponent<PlayerInventory>().Initialize(_items);
             CameraFollow(player);
             return player;
-        }
-
-        private void CreateBulletPool(WeaponType weaponType, float Damage)
-        {
-            if (AssetPath.WeaponAmmoPrefabPaths[weaponType] != null)
-                _bulletFactory.CreateBulletPool(AssetPath.WeaponAmmoPrefabPaths[weaponType], Damage);
         }
 
         private void CameraFollow(GameObject gameObject)
