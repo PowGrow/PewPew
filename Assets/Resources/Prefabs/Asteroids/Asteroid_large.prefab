@@ -43811,7 +43811,6 @@ GameObject:
   - component: {fileID: 676095386127043176}
   - component: {fileID: 5630048632621788670}
   - component: {fileID: 7617409442979188627}
-  - component: {fileID: 2484633117255644396}
   - component: {fileID: 4053839169457887897}
   - component: {fileID: 7178719341987996030}
   - component: {fileID: 1406128778080490853}
@@ -43854,19 +43853,19 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8037162848614483779}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 49adc519c78c0314a8f0d5931e7a2914, type: 3}
+  - {fileID: 2100000, guid: 57bdf53668e3a284a8eda4f9bf5bb0e0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -43888,21 +43887,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2484633117255644396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8037162848614483779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd5ca9579442d040855ee1b3a7889d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Collider: {fileID: 1406128778080490853}
-  Particles: {fileID: 2920922687428573935}
-  Asteroid: {fileID: 4053839169457887897}
 --- !u!114 &4053839169457887897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43916,7 +43900,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MeshRenderer: {fileID: 7617409442979188627}
-  asteroidCollider: {fileID: 1406128778080490853}
+  AsteroidCollider: {fileID: 1406128778080490853}
+  ParentParticles: {fileID: 2920922687428573935}
   DestroyParticles: {fileID: 4973547793287042637}
   DamageParticles: {fileID: 6688744298124464370}
   Health: 5

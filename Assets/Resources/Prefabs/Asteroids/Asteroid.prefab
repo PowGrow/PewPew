@@ -53353,10 +53353,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 49adc519c78c0314a8f0d5931e7a2914,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2351442052630466513}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 49adc519c78c0314a8f0d5931e7a2914,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2867933665542056648}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 49adc519c78c0314a8f0d5931e7a2914,
         type: 3}
@@ -53397,21 +53393,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 289301614986012343, guid: 49adc519c78c0314a8f0d5931e7a2914, type: 3}
---- !u!114 &2351442052630466513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 717977825986691723}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd5ca9579442d040855ee1b3a7889d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MeshCollider: {fileID: 5062320882634272099}
-  Particles: {fileID: 4278424741142844206}
-  Asteroid: {fileID: 2867933665542056648}
 --- !u!114 &2867933665542056648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53425,6 +53406,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MeshRenderer: {fileID: 1366342722031772510}
+  AsteroidCollider: {fileID: 0}
+  ParentParticles: {fileID: 0}
   DestroyParticles: {fileID: 7154321949298378649}
   DamageParticles: {fileID: 2304623598030262488}
   Health: 5
