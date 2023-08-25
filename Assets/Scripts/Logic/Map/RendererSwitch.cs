@@ -1,25 +1,25 @@
 using UnityEngine;
 
-public class RendererSwitch : MonoBehaviour
+public class RendererSwitch
 {
-    [SerializeField]
     private Collider Collider;
-    [SerializeField]
     private GameObject Particles;
-    [SerializeField]
     private Asteroid Asteroid;
 
-    private void Awake()
+    public RendererSwitch(Collider collider, GameObject particles, Asteroid asteroid)
+    {
+        Collider = collider;
+        Particles = particles;
+        Asteroid = asteroid;
+        SetComponent(enable: false);
+    }
+
+    public void OnBecameInvisible()
     {
         SetComponent(enable: false);
     }
 
-    private void OnBecameInvisible()
-    {
-        SetComponent(enable: false);
-    }
-
-    private void OnBecameVisible()
+    public void OnBecameVisible()
     {
         SetComponent(enable: true);
 
@@ -30,5 +30,6 @@ public class RendererSwitch : MonoBehaviour
         Collider.enabled = enable;
         Particles.SetActive(enable);
         Asteroid.enabled = enable;
+        Asteroid.Rotator.IsActive = enable;
     }
 }

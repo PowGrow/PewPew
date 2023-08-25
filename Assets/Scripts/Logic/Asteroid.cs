@@ -9,16 +9,23 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private MeshRenderer MeshRenderer;
     [SerializeField]
-    private Collider asteroidCollider;
+    private Collider AsteroidCollider;
+    [SerializeField]
+    private GameObject ParentParticles;
     [SerializeField]
     private ParticleSystem DestroyParticles;
     [SerializeField]
     private ParticleSystem DamageParticles;
 
+
     [SerializeField]
     [Range(0, 5)]
     private int Health;
     protected string _type = "Asteroid";
+
+    public AsteroidRotator Rotator { get; private set; }
+    public RendererSwitch Switch { get; private set; }
+
 
     [ContextMenu("TestDamage")]
     public void TestDamage()
@@ -36,7 +43,7 @@ public class Asteroid : MonoBehaviour
 
     private void Destruct()
     {
-        asteroidCollider.enabled = false;
+        AsteroidCollider.enabled = false;
         DestroyParticles.Play();
         StartCoroutine(HideAsteroid(0.5f));
         DropLoot();
@@ -58,5 +65,26 @@ public class Asteroid : MonoBehaviour
     public void DropLoot()
     {
         OnLootDroping?.Invoke(this, _type, transform.position);
+    }
+
+    private void Awake()
+    {
+        Rotator = new AsteroidRotator(gameObject, UnityEngine.Random.Range(3f, 10f));
+        Switch = new RendererSwitch(AsteroidCollider, ParentParticles, this);
+    }
+
+    private void Update()
+    {
+        Rotator.Execute();
+    }
+
+    private void OnBecameVisible()
+    {
+        Switch.OnBecameVisible();
+    }
+
+    private void OnBecameInvisible()
+    {
+        Switch.OnBecameInvisible();
     }
 }
