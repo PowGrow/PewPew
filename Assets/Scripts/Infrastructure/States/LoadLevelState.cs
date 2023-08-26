@@ -4,9 +4,9 @@ using Pewpew.Infrastructure.Services.Inventory;
 using Pewpew.Logic.Inventory;
 using Pewpew.Logic.Loot;
 using Pewpew.Logic.Map;
-using Pewpew.Player;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace Pewpew.Infrastructure.States
@@ -57,10 +57,12 @@ namespace Pewpew.Infrastructure.States
             GameObject player = InstantiatePlayer(_gameFactory);
             GameObject border = _gameFactory.CreateGameBorder(_borderScaleConjuctor, at: GameObject.FindWithTag(BorderInitialPointTag));
             List<Asteroid> asteroids = GenerateAsteroidMap(_gameFactory, border.transform.localScale.x, _asteroidDensity);
-            LootDistributor distributor = InstantiateLootDistributor(_gameFactory, _lootTable,_itemsInfoService.ItemsInfo,asteroids);
+            LootDistributor distributor = InstantiateLootDistributor(_gameFactory, _lootTable,_itemsInfoService.Items,asteroids);
 
             _stateMachine.Enter<GameLoopState>();
         }
+
+
 
         private LootDistributor InstantiateLootDistributor(IGameFactory gameFactory, LootTable lootTable, Items items, List<Asteroid> asteroids)
         {

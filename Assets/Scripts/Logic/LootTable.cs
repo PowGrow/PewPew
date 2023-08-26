@@ -15,7 +15,7 @@ namespace Pewpew.Logic.Loot
         public LootTable()
         {
             _itemsInfoService = AllServices.Container.Single<IItemsInfoService>();
-            _itemsInfo = _itemsInfoService.ItemsInfo;
+            _itemsInfo = _itemsInfoService.Items;
             Table = new Dictionary<string, Drop>();
         }
 

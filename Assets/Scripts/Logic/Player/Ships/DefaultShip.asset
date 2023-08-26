@@ -24,3 +24,4 @@ MonoBehaviour:
   AmmoStock: 20
   FireDistance: 20
   FireSpread: 15
+  CargoSize: 10

@@ -1,4 +1,3 @@
-using Pewpew.Infrastructure.AssetManagment;
 using Pewpew.Infrastructure.Factory;
 using Pewpew.Infrastructure.Services;
 using Pewpew.Infrastructure.Services.Inventory;
@@ -6,7 +5,6 @@ using Pewpew.Logic.Inventory;
 using Pewpew.Player;
 using Pewpew.Services.Inputs;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -54,7 +52,7 @@ public class Player : MonoBehaviour
         Stats = new Stats(initStats);
         Health = new Health(Stats);
         Guns = new Guns(inputService, bulletFactory, initStats, ShootTarget, ShootPositions, RangeCollider);
-        Cargo = new Inventory(itemsInfoService.ItemsInfo , initStats.CargoSize);
+        Cargo = new Inventory(itemsInfoService.Items , initStats.CargoSize);
         Engine = new Movement(Stats, ShipRigidbody, ShipTransform, DeltaTorque);
         EngineParticles = new EngineParticles(inputService, TrailsOnAngles, EngineTrails, EngineLight, ShipTransform);
 

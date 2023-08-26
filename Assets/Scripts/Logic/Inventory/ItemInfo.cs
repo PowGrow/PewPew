@@ -1,24 +1,30 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Pewpew.Logic.Inventory
 {
+    [Serializable]
     public class ItemInfo
     {
+        [field:SerializeField]
         public int Id { get; private set; }
+        [field: SerializeField]
         public string Name { get; private set; }
+        [field: SerializeField]
         public string Description { get; private set; }
+        [field: SerializeField]
         public string Sprite { get; private set; }
-        public GameObject Prefab {get; private set;}
+        [field: SerializeField]
         public bool IsStackable { get; private set; }
+        [field: SerializeField]
         public int StackSize { get; private set; }
 
-        public ItemInfo(int id, string name, string description, string sprite, GameObject prefab, bool isStackable = false, int stackSize = 1)
+        public ItemInfo(int id, string name, string description, string sprite, bool isStackable = false, int stackSize = 1)
         {
             Id = id;
             Name = name;
             Description = description;
             Sprite = sprite;
-            Prefab = prefab;
             IsStackable = isStackable;
             StackSize = stackSize;
 
