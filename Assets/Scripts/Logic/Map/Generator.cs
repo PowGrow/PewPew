@@ -1,6 +1,5 @@
 using Pewpew.Infrastructure.AssetManagment;
 using Pewpew.Infrastructure.Factory;
-using Pewpew.Logic.Loot;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,7 +34,7 @@ namespace Pewpew.Logic.Map
 
                     var pointAsteroidScale = UnityEngine.Random.Range(0, 100f);
 
-                    foreach(KeyValuePair<AsteroidTypes,float> type in AssetLevels.AsteroidSizes)
+                    foreach(KeyValuePair<AsteroidSizes,float> type in AssetLevels.AsteroidSizes)
                     {
                         if(pointAsteroidScale >= type.Value)
                         {
@@ -50,7 +49,7 @@ namespace Pewpew.Logic.Map
             return asteroids;
         }
 
-        private Asteroid CreateAsteroid((int x,int y) at, AsteroidTypes type, Transform parent)
+        private Asteroid CreateAsteroid((int x,int y) at, AsteroidSizes type, Transform parent)
         {
             var delta = Convert.ToInt32(type);
             if (IsPlaceAvaliable(at, delta))

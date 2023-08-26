@@ -22,11 +22,11 @@ namespace Pewpew.Infrastructure.AssetManagment
         public const string AsteroidLargePrefabPath = "Prefabs/Asteroids/Asteroid_large";
         public const string AsteroidContainerPrefabPath = "Prefabs/Asteroids/ASTEROID-CONTAINER";
 
-        public static readonly Dictionary<AsteroidTypes, string> AsteroidPrefabPaths = new Dictionary<AsteroidTypes, string>()
+        public static readonly Dictionary<AsteroidSizes, string> AsteroidPrefabPaths = new Dictionary<AsteroidSizes, string>()
         {
-            {AsteroidTypes.Large, AsteroidLargePrefabPath},
-            {AsteroidTypes.Medium, AsteroidMediumPrefabPath },
-            {AsteroidTypes.Small, AsteroidSmallPrefabPath },
+            {AsteroidSizes.Large, AsteroidLargePrefabPath},
+            {AsteroidSizes.Medium, AsteroidMediumPrefabPath },
+            {AsteroidSizes.Small, AsteroidSmallPrefabPath },
         };
 
         public static readonly Dictionary<WeaponType, string> WeaponAmmoPrefabPaths = new Dictionary<WeaponType, string>()

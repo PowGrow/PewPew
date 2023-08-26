@@ -21,6 +21,8 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     [Range(0, 5)]
     private int Health;
+    private Camera _mainCam;
+    private float _visibilityOffset = 3f;
     protected string _type = "Asteroid";
 
     public AsteroidRotator Rotator { get; private set; }
@@ -70,7 +72,12 @@ public class Asteroid : MonoBehaviour
     private void Awake()
     {
         Rotator = new AsteroidRotator(gameObject, UnityEngine.Random.Range(3f, 10f));
-        Switch = new RendererSwitch(AsteroidCollider, ParentParticles, this);
+        Switch = new RendererSwitch(MeshRenderer,AsteroidCollider, ParentParticles, Rotator);
+    }
+
+    private void Start()
+    {
+        _mainCam = Camera.main;
     }
 
     private void Update()
@@ -78,12 +85,40 @@ public class Asteroid : MonoBehaviour
         Rotator.Execute();
     }
 
-    private void OnBecameVisible()
+    private void FixedUpdate()
+    {
+        CheckVisibility();
+    }
+
+    //private void OnBecameVisible()
+    //{
+    //    Switch.OnBecameVisible();
+    //}
+
+    //private void OnBecameInvisible()
+    //{
+    //    Switch.OnBecameInvisible();
+    //}
+
+    private void CheckVisibility()
+    {
+        var objectPosition = _mainCam.WorldToScreenPoint(this.transform.position);
+        if(objectPosition.x < 0 | objectPosition.y < 0 | objectPosition.x > _mainCam.pixelWidth | objectPosition.y > _mainCam.pixelHeight)
+        {
+            OnInvisible();
+        }
+        else
+        {
+            OnVisible();
+        }
+    }
+
+    private void OnVisible()
     {
         Switch.OnBecameVisible();
     }
 
-    private void OnBecameInvisible()
+    private void OnInvisible()
     {
         Switch.OnBecameInvisible();
     }

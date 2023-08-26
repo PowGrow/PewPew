@@ -2,16 +2,17 @@ using UnityEngine;
 
 public class RendererSwitch
 {
-    private Collider Collider;
-    private GameObject Particles;
-    private Asteroid Asteroid;
+    private MeshRenderer _renderer;
+    private Collider _collider;
+    private GameObject _particles;
+    private AsteroidRotator _asteroidRotator;
 
-    public RendererSwitch(Collider collider, GameObject particles, Asteroid asteroid)
+    public RendererSwitch(MeshRenderer renderer, Collider collider, GameObject particles, AsteroidRotator asteroidRotator)
     {
-        Collider = collider;
-        Particles = particles;
-        Asteroid = asteroid;
-        SetComponent(enable: false);
+        _renderer = renderer;
+        _collider = collider;
+        _particles = particles;
+        _asteroidRotator = asteroidRotator;
     }
 
     public void OnBecameInvisible()
@@ -27,9 +28,9 @@ public class RendererSwitch
 
     private void SetComponent(bool enable)
     {
-        Collider.enabled = enable;
-        Particles.SetActive(enable);
-        Asteroid.enabled = enable;
-        Asteroid.Rotator.IsActive = enable;
+        //_renderer.enabled = enable;
+        _collider.enabled = enable;
+        _particles.SetActive(enable);
+        _asteroidRotator.IsActive = enable;
     }
 }

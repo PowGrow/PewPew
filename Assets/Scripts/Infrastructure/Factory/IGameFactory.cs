@@ -10,7 +10,7 @@ namespace Pewpew.Infrastructure.Factory
         GameObject CreatePlayer(GameObject at);
         GameObject CreateLobbyHud();
         GameObject CreateGameBorder(float borderSize, GameObject at);
-        Type CreateAsteroid<Type>(Vector3 at, Quaternion rotation, AsteroidTypes type, Transform parent) where Type : Object;
+        Type CreateAsteroid<Type>(Vector3 at, Quaternion rotation, AsteroidSizes type, Transform parent) where Type : Object;
         GameObject CreateAsteroidContainer();
         GameObject CreateLoot(ItemInfo itemInfo, Vector3 at);
     }

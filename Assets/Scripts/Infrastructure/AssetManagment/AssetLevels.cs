@@ -24,11 +24,11 @@ namespace Pewpew.Infrastructure.AssetManagment
         public const float MediumAsteroidChanceMin = 95f;
         public const float LargeAsteroidChanceMin = 99f;
 
-        public static readonly Dictionary<AsteroidTypes,float> AsteroidSizes = new Dictionary<AsteroidTypes, float>
+        public static readonly Dictionary<AsteroidSizes,float> AsteroidSizes = new Dictionary<AsteroidSizes, float>
         {
-            {AsteroidTypes.Large, LargeAsteroidChanceMin },
-            {AsteroidTypes.Medium, MediumAsteroidChanceMin},
-            {AsteroidTypes.Small, SmallAsteroidChanceMin },
+            { Logic.Map.AsteroidSizes.Large, LargeAsteroidChanceMin },
+            { Logic.Map.AsteroidSizes.Medium, MediumAsteroidChanceMin},
+            { Logic.Map.AsteroidSizes.Small, SmallAsteroidChanceMin },
         };
     }
 }

@@ -30,7 +30,7 @@ namespace Pewpew.Infrastructure.Factory
             return border;
         }
 
-        public Type CreateAsteroid<Type>(Vector3 at, Quaternion rotation, AsteroidTypes type, Transform parent) where Type: Object
+        public Type CreateAsteroid<Type>(Vector3 at, Quaternion rotation, AsteroidSizes type, Transform parent) where Type: Object
         {
             return _assets.Instantiate<Type>(AssetPath.AsteroidPrefabPaths[type], at, faceTo: rotation, parent);
         }
