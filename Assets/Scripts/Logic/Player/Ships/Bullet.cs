@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Asteroid asteroid = null;
-        if (other.gameObject.TryGetComponent<Asteroid>(out asteroid))
+        if (other.gameObject.TryGetComponent(out asteroid))
             asteroid.GetDamage();
     }
 

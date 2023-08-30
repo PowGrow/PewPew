@@ -37,13 +37,20 @@ namespace Pewpew.Logic.Map
 
         private void GetLoot(Asteroid asteroid, AsteroidTypes entityType, Vector3 at)
         {
-            foreach (KeyValuePair<ItemInfo,float> itemInfoChance in _lootTable.Table[entityType].Chance)
+            try
             {
-                var randomChance = Random.Range(0, 100f);
-                if (randomChance <= itemInfoChance.Value)
-                    _gameFactory.CreateLoot(_items.GetItemInfo(itemInfoChance.Key.Id), at);
+                foreach (KeyValuePair<ItemInfo,float> itemInfoChance in _lootTable.Table[entityType].Chance)
+                {
+                    var randomChance = Random.Range(0, 100f);
+                    if (randomChance <= itemInfoChance.Value)
+                        _gameFactory.CreateLoot(_items.GetItemInfo(itemInfoChance.Key.Id), at);
+                }
+                asteroid.OnLootDroping -= GetLoot;
             }
-            asteroid.OnLootDroping -= GetLoot;
+            catch(KeyNotFoundException)
+            {
+
+            }
         }
     }
 }

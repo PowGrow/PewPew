@@ -18,13 +18,10 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private ParticleSystem DamageParticles;
 
-
-    [SerializeField]
-    [Range(0, 5)]
-    private int Health;
     [SerializeField]
     private AsteroidTypes Type;
 
+    public int Health { get; private set; }
     public AsteroidRotator Rotator { get; private set; }
     public RendererSwitch Switch { get; private set; }
 
@@ -33,6 +30,11 @@ public class Asteroid : MonoBehaviour
     public void TestDamage()
     {
         GetDamage();
+    }
+
+    public void SetHealth(int health)
+    {
+        Health = health;
     }
 
     public void GetDamage()

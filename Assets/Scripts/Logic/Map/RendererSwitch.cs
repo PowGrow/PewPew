@@ -29,7 +29,6 @@ public class RendererSwitch
     {
         Collider.enabled = enable;
         Particles.SetActive(enable);
-        Asteroid.enabled = enable;
         Asteroid.Rotator.IsActive = enable;
     }
 }
