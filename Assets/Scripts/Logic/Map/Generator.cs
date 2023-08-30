@@ -1,7 +1,6 @@
 using Pewpew.Infrastructure.AssetManagment;
 using Pewpew.Infrastructure.Factory;
 using Pewpew.Logic.Asteroids;
-using Pewpew.Logic.Loot;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,6 +61,7 @@ namespace Pewpew.Logic.Map
             PlaceAsteroid(at, delta);
             var asteroid = _gameFactory.CreateAsteroid<Asteroid>(new Vector3(at.x, 0, at.y), Quaternion.Euler(new Vector3(UnityEngine.Random.Range(0,359), UnityEngine.Random.Range(0,359), UnityEngine.Random.Range(0,359))), type, size, parent);
             asteroid.SetHealth((int)size);
+            asteroid.SetGameFactory(_gameFactory);
             var rigidbody = asteroid.gameObject.GetComponent<Rigidbody>();
             rigidbody.mass = rigidbody.mass * (int)size;
             return asteroid;

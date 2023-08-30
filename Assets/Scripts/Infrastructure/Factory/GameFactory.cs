@@ -10,8 +10,6 @@ namespace Pewpew.Infrastructure.Factory
 {
     public class GameFactory : IGameFactory
     {
-        
-
         private IAssetProvider _assets;
 
         public GameFactory(IAssetProvider assets)
@@ -50,6 +48,12 @@ namespace Pewpew.Infrastructure.Factory
             var loot = _assets.Instantiate<Loot>(AssetItems.ItemsPrefabPath + itemInfo.Name, at);
             loot.SetItem(new Item(itemInfo.Id, Random.Range(1, AssetLevels.LootDropQuantity)));
             return loot.gameObject;
+        }
+
+        public void CreateAsteroidParticles(Vector3 at)
+        {
+            var particles = _assets.Instantiate<ParticleSystem>(AssetPath.GetAsteroidDestroyParticlesPath(),at);
+            particles.Play();
         }
     }
 }

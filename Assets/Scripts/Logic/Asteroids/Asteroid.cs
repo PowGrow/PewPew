@@ -1,3 +1,5 @@
+using Pewpew.Infrastructure.AssetManagment;
+using Pewpew.Infrastructure.Factory;
 using Pewpew.Logic.Asteroids;
 using System;
 using System.Collections;
@@ -14,8 +16,6 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private GameObject ParentParticles;
     [SerializeField]
-    private ParticleSystem DestroyParticles;
-    [SerializeField]
     private ParticleSystem DamageParticles;
 
     [SerializeField]
@@ -24,6 +24,8 @@ public class Asteroid : MonoBehaviour
     public int Health { get; private set; }
     public AsteroidRotator Rotator { get; private set; }
     public RendererSwitch Switch { get; private set; }
+
+    private IGameFactory _gameFactory;
 
 
     [ContextMenu("TestDamage")]
@@ -37,6 +39,11 @@ public class Asteroid : MonoBehaviour
         Health = health;
     }
 
+    public void SetGameFactory(IGameFactory gameFactory)
+    {
+        _gameFactory = gameFactory;
+    }
+
     public void GetDamage()
     {
         Health--;
@@ -48,24 +55,10 @@ public class Asteroid : MonoBehaviour
     private void Destruct()
     {
         AsteroidCollider.enabled = false;
-        DestroyParticles.Play();
-        StartCoroutine(HideAsteroid(0.5f));
+        _gameFactory.CreateAsteroidParticles(gameObject.transform.position);
         DropLoot();
-        StartCoroutine(DestoryAsteroid(1.5f));
-    }
-
-    private IEnumerator DestoryAsteroid(float delay)
-    {
-        yield return new WaitForSeconds(delay);
         Destroy(gameObject);
     }
-
-    private IEnumerator HideAsteroid(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        MeshRenderer.enabled = false;
-    }
-
     public void DropLoot()
     {
         OnLootDroping?.Invoke(this, Type, transform.position);
