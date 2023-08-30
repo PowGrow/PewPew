@@ -12,52 +12,69 @@ namespace Pewpew.Logic.Map
 
         private IGameFactory _gameFactory;
         private int _asteroidDensity;
-        private GameObject _container;
+        private Asteroids _asteroids;
+        private Dictionary<AsteroidTypes,float> _mineralChances;
 
-        public Generator(IGameFactory gameFactory, int asteroidsDensity)
+        public Generator(IGameFactory gameFactory, Dictionary<AsteroidTypes, float> mineralChances, int asteroidsDensity)
         {
             _gameFactory = gameFactory;
             _asteroidDensity = asteroidsDensity;
+            _mineralChances = mineralChances;
         }
 
-        public List<Asteroid> GenerateAsteroids(int mapRadius)
+        public Asteroids GenerateAsteroids(int mapRadius)
         {
-            var asteroids = new List<Asteroid>();
-            _container = _gameFactory.CreateAsteroidContainer();
+            _asteroids = _gameFactory.CreateAsteroidsBehaviour();
             _asteroidMap = InstantiateAsteroidMap(mapRadius);
             for (int x = -1 * mapRadius; x < mapRadius; x += _asteroidDensity)
             {
                 for (int y = -1 * mapRadius; y < mapRadius; y += _asteroidDensity)
                 {
-                    if (!IsCoordinateInRadius(x,y,mapRadius) || !IsCoordinateAvaliable(x,y)) //!!!
+                    if (!IsCoordinateInRadius(x, y, mapRadius) || !IsCoordinateAvaliable(x, y))
                         continue;
 
-                    var pointAsteroidScale = UnityEngine.Random.Range(0, 100f);
+                    AsteroidTypes asteroidType = GetAsteroidType(_mineralChances);
 
-                    foreach(KeyValuePair<AsteroidSizes,float> type in AssetLevels.AsteroidSizes)
+                    var randomAsteroidSize = UnityEngine.Random.Range(0, 100f);
+                    foreach (KeyValuePair<AsteroidSizes, float> size in AssetLevels.AsteroidSizes)
                     {
-                        if(pointAsteroidScale >= type.Value)
+                        var delta = Convert.ToInt32(asteroidType) / 2;
+                        if (randomAsteroidSize >= size.Value && IsPlaceAvaliable(at: (x, y), delta))
                         {
-                            var asteroid = CreateAsteroid(at: (x, y), type.Key, _container.transform);
-                            if (asteroid != null)
-                                asteroids.Add(asteroid);
+                            (GameObject gameObject, AsteroidData data) asteroid = CreateAsteroid(at: (x, y), asteroidType, size.Key, _asteroids.transform, delta);
+                            _asteroids.AsteroidsData.Add(asteroid.gameObject, asteroid.data);
                             break;
                         }
                     }
                 }
             }
-            return asteroids;
+            _asteroids.SetActive(true);
+            return _asteroids;
         }
 
-        private Asteroid CreateAsteroid((int x,int y) at, AsteroidSizes type, Transform parent)
+        private AsteroidTypes GetAsteroidType(Dictionary<AsteroidTypes, float> chances)
         {
-            var delta = Convert.ToInt32(type);
-            if (IsPlaceAvaliable(at, delta))
+            AsteroidTypes asteroidType = AsteroidTypes.Empty;
+            var currentChance = 0f;
+            var randomChance = UnityEngine.Random.Range(0, 100f);
+            foreach (KeyValuePair<AsteroidTypes, float> type in chances)
             {
-                PlaceAsteroid(at, delta);
-                return _gameFactory.CreateAsteroid<Asteroid>(new Vector3(at.x, 0, at.y), Quaternion.Euler(new Vector3(UnityEngine.Random.Range(0,359), UnityEngine.Random.Range(0,359), UnityEngine.Random.Range(0,359))), type, parent);
+                if (randomChance < type.Value + currentChance && randomChance >= currentChance)
+                {
+                    asteroidType = type.Key;
+                    break;
+                }
+                currentChance += type.Value;
             }
-            return null;
+
+            return asteroidType;
+        }
+
+        private (GameObject, AsteroidData) CreateAsteroid((int x,int y) at, AsteroidTypes type, AsteroidSizes size, Transform parent, int delta)
+        {
+            PlaceAsteroid(at, delta);
+            var randomRotation = Quaternion.Euler(new Vector3(UnityEngine.Random.Range(0, 359), UnityEngine.Random.Range(0, 359), UnityEngine.Random.Range(0, 359)));
+            return _gameFactory.CreateAsteroid(new Vector3(at.x, 0, at.y), randomRotation, type, size, parent);
         }
 
         private bool IsPlaceAvaliable((int x, int y) at, int delta)

@@ -2,6 +2,7 @@
 using Pewpew.Logic.Inventory;
 using Pewpew.Logic.Map;
 using PewPew.Infrastructure.AssetManagment;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pewpew.Infrastructure.Factory
@@ -30,14 +31,21 @@ namespace Pewpew.Infrastructure.Factory
             return border;
         }
 
-        public Type CreateAsteroid<Type>(Vector3 at, Quaternion rotation, AsteroidSizes type, Transform parent) where Type: Object
+        public (GameObject,AsteroidData) CreateAsteroid(Vector3 at, Quaternion rotation, AsteroidTypes type, AsteroidSizes size, Transform parent)
         {
-            return _assets.Instantiate<Type>(AssetPath.AsteroidPrefabPaths[type], at, faceTo: rotation, parent);
+            var asteroidSize = (int)size;
+            var health = asteroidSize;
+            var gameObject = _assets.Instantiate(AssetPath.GetAsteroidPrefabPath(type), at, faceTo: rotation, parent);
+            gameObject.transform.localScale = new Vector3(asteroidSize, asteroidSize, asteroidSize);
+            var damageParticles = _assets.Instantiate<ParticleSystem>(AssetPath.GetAsteroidDamageParticlesPath(), at, Quaternion.identity, gameObject.transform);
+            var destroyParticles = _assets.Instantiate<ParticleSystem>(AssetPath.GetAsteroidDestroyParticlesPath(), at, Quaternion.identity, gameObject.transform);
+            var rotator = new AsteroidRotator(gameObject, Random.Range(3f, 10f));
+            return (gameObject,new AsteroidData(rotator, damageParticles, destroyParticles, health, type));
         }
 
-        public GameObject CreateAsteroidContainer()
+        public Asteroids CreateAsteroidsBehaviour()
         {
-            return _assets.Instantiate(AssetPath.AsteroidContainerPrefabPath);
+            return _assets.Instantiate<Asteroids>(AssetPath.AsteroidContainerPrefabPath, Vector3.zero);
         }
 
         public GameObject CreateLoot(ItemInfo itemInfo, Vector3 at)

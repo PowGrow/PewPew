@@ -1,6 +1,7 @@
 using Pewpew.Infrastructure.AssetManagment;
 using Pewpew.Infrastructure.States;
 using Pewpew.Logic.Loot;
+using System.Collections.Generic;
 
 public class LobbyState : IPayloadedState<UiLobbyView>
 {
@@ -17,9 +18,15 @@ public class LobbyState : IPayloadedState<UiLobbyView>
     private void PlayButtonClickEventHandler()
     {
         var testLootTable = new LootTable();
-        testLootTable.Add("Asteroid", 1, 20);
-        testLootTable.Add("Asteroid", 2, 20);
-        _stateMachine.Enter<LoadLevelState, LoadLevelPayload>(new LoadLevelPayload(AssetLevels.MediumBorderSize,5, testLootTable));
+        testLootTable.Add(AsteroidTypes.Copper, 1, 100);
+        testLootTable.Add(AsteroidTypes.Iron, 2, 100);
+        var mineralChances = new Dictionary<AsteroidTypes, float>()
+        {
+            {AsteroidTypes.Empty, 80f },
+            {AsteroidTypes.Copper, 10f },
+            {AsteroidTypes.Iron, 10f },
+        };
+        _stateMachine.Enter<LoadLevelState, LoadLevelPayload>(new LoadLevelPayload(AssetLevels.MediumBorderSize,5, testLootTable, mineralChances));
     }
 
     public void Enter(UiLobbyView lobbyView)

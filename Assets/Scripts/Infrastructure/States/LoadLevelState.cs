@@ -23,9 +23,7 @@ namespace Pewpew.Infrastructure.States
         private readonly IBulletFactory _bulletFactory;
         private readonly IItemsInfoService _itemsInfoService;
 
-        private LootTable _lootTable;
-        private int _asteroidDensity;
-        private float _borderScaleConjuctor;
+        private LoadLevelPayload _payload;
 
 
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory, IBulletFactory bulletFactory, IItemsInfoService itemsInfoService)
@@ -40,9 +38,7 @@ namespace Pewpew.Infrastructure.States
 
         public void Enter(LoadLevelPayload payload)
         {
-            _lootTable = payload.LootTable;
-            _asteroidDensity = payload.AsteroidDensity;
-            _borderScaleConjuctor = payload.BorderSize;
+            _payload = payload;
             _curtain.Show();
             _sceneLoader.Load(AssetLevels.GameLevelName, OnLoaded);
 
@@ -55,26 +51,26 @@ namespace Pewpew.Infrastructure.States
         private void OnLoaded()
         {
             GameObject player = InstantiatePlayer(_gameFactory);
-            GameObject border = _gameFactory.CreateGameBorder(_borderScaleConjuctor, at: GameObject.FindWithTag(BorderInitialPointTag));
-            List<Asteroid> asteroids = GenerateAsteroidMap(_gameFactory, border.transform.localScale.x, _asteroidDensity);
-            LootDistributor distributor = InstantiateLootDistributor(_gameFactory, _lootTable,_itemsInfoService.Items,asteroids);
+            GameObject border = _gameFactory.CreateGameBorder(_payload.BorderSize, at: GameObject.FindWithTag(BorderInitialPointTag));
+            Asteroids asteroids = GenerateAsteroidMap(_gameFactory, _payload.MineralChances, border.transform.localScale.x, _payload.AsteroidDensity);
+            LootDistributor distributor = InstantiateLootDistributor(_gameFactory, _payload.LootTable,_itemsInfoService.Items,asteroids);
 
             _stateMachine.Enter<GameLoopState>();
         }
 
 
 
-        private LootDistributor InstantiateLootDistributor(IGameFactory gameFactory, LootTable lootTable, Items items, List<Asteroid> asteroids)
+        private LootDistributor InstantiateLootDistributor(IGameFactory gameFactory, LootTable lootTable, Items items, Asteroids asteroids)
         {
             return new LootDistributor(gameFactory, lootTable, items, asteroids);
         }
 
-        private List<Asteroid> GenerateAsteroidMap(IGameFactory gameFactory, float borderScale, int asteroidDensity)
+        private Asteroids GenerateAsteroidMap(IGameFactory gameFactory, Dictionary<AsteroidTypes,float> mineralChances, float borderScale,  int asteroidDensity)
         {
             Generator mapGenerator;
             if (asteroidDensity != 0)
             {
-                mapGenerator = new Generator(gameFactory, asteroidDensity);
+                mapGenerator = new Generator(gameFactory, mineralChances, asteroidDensity);
                 return mapGenerator.GenerateAsteroids(Convert.ToInt32(borderScale * AssetLevels.BorderSizeСoefficient));
             }
             return null;

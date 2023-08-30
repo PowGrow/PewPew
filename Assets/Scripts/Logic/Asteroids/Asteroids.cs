@@ -1,31 +1,32 @@
-using Pewpew.Logic.Map;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Asteroids : MonoBehaviour
 {
-    public event Action<GameObject, AsteroidTypes, Vector3> OnAsteroidLootDroping;
-    public Dictionary<GameObject, AsteroidData> AsteroidsData { get; private set; }
+    public event Action<AsteroidTypes, Vector3> OnAsteroidLootDroping;
+    public Dictionary<GameObject, AsteroidData> AsteroidsData { get; private set; } = new Dictionary<GameObject, AsteroidData>();
 
     private Camera _mainCam;
+    private bool _isActive = false;
 
-    public Asteroids(Dictionary<GameObject, (AsteroidTypes type, AsteroidSizes size)> gameObjects)
+    public void SetActive(bool state)
     {
-        AsteroidsData = CreateAsteroidsHashSet(gameObjects);
+        _isActive = state;
     }
-
     public void DropLoot(GameObject gameObject)
     {
-        OnAsteroidLootDroping?.Invoke(gameObject, AsteroidsData[gameObject].Type, gameObject.transform.position);
+        OnAsteroidLootDroping?.Invoke(AsteroidsData[gameObject].Type, gameObject.transform.position);
         AsteroidsData.Remove(gameObject);
     }
 
     public void GetDamage(GameObject gameObject)
     {
         var asteroidData = AsteroidsData[gameObject];
-        AsteroidsData[gameObject] = new AsteroidData(asteroidData.Rotator, 
-                                                    asteroidData.Health - 1, 
+        AsteroidsData[gameObject] = new AsteroidData(asteroidData.Rotator,
+                                                    asteroidData.DamageParticles,
+                                                    asteroidData.DestroyParticles,
+                                                    asteroidData.Health - 1,
                                                     asteroidData.Type);
 
         if (asteroidData.Health <= 0)
@@ -37,31 +38,18 @@ public class Asteroids : MonoBehaviour
         DropLoot(gameObject);
     }
 
-    private Dictionary<GameObject, AsteroidData> CreateAsteroidsHashSet(Dictionary<GameObject, (AsteroidTypes type,AsteroidSizes size)> gameObjects)
+    private void CheckVisibility(KeyValuePair<GameObject, AsteroidData> asteroidData)
     {
-        var healthMultiplier = 2;
-        var index = 0;
-        var list = new Dictionary<GameObject, AsteroidData>();
-        foreach(KeyValuePair<GameObject, (AsteroidTypes type, AsteroidSizes size)> keyValuePair in gameObjects)
-        {
-            var rotator = new AsteroidRotator(keyValuePair.Key, UnityEngine.Random.Range(3f, 10f));
-            var health = (int)keyValuePair.Value.size * healthMultiplier;
-            list.Add(keyValuePair.Key,new AsteroidData(rotator, health, keyValuePair.Value.type));
-            index++;
-        }
-        return list;
-    }
-
-    private void CheckVisibility(GameObject gameObject)
-    {
-        var objectPosition = _mainCam.WorldToScreenPoint(gameObject.transform.position);
+        var objectPosition = _mainCam.WorldToScreenPoint(asteroidData.Key.transform.position);
         if (objectPosition.x < 0 | objectPosition.y < 0 | objectPosition.x > _mainCam.pixelWidth | objectPosition.y > _mainCam.pixelHeight)
         {
-            gameObject.SetActive(false);
+            asteroidData.Key.SetActive(false);
+            asteroidData.Value.Rotator.IsActive = false;
         }
         else
         {
-            gameObject.SetActive(true);
+            asteroidData.Key.SetActive(true);
+            asteroidData.Value.Rotator.IsActive = true;
         }
     }
 
@@ -72,6 +60,8 @@ public class Asteroids : MonoBehaviour
 
     private void Update()
     {
+        if (!_isActive)
+            return;
         foreach (KeyValuePair<GameObject,AsteroidData> asteroidData in AsteroidsData)
         {
             asteroidData.Value.Rotator.Execute();
@@ -79,9 +69,11 @@ public class Asteroids : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (!_isActive)
+            return;
         foreach (KeyValuePair<GameObject, AsteroidData> asteroidData in AsteroidsData)
         {
-            CheckVisibility(asteroidData.Key);
+            CheckVisibility(asteroidData);
         }
     }
 }
@@ -89,12 +81,16 @@ public class Asteroids : MonoBehaviour
 public struct AsteroidData
 {
     public AsteroidRotator Rotator { get; private set; }
+    public ParticleSystem DamageParticles { get; private set; }
+    public ParticleSystem DestroyParticles { get; private set; }
     public int Health { get; set; }
     public AsteroidTypes Type { get; private set; }
 
-    public AsteroidData(AsteroidRotator rotator, int health, AsteroidTypes type)
+    public AsteroidData(AsteroidRotator rotator, ParticleSystem damageParticles, ParticleSystem destroyParticles, int health, AsteroidTypes type)
     {
         Rotator = rotator;
+        DamageParticles = damageParticles;
+        DestroyParticles = destroyParticles;
         Health = health;
         Type = type;
     }

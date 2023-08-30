@@ -2,8 +2,8 @@ namespace Pewpew.Logic.Map
 {
     public enum AsteroidSizes
     {
-        Small = 0,
-        Medium = 1,
-        Large = 3,
+        Small = 2,
+        Medium = 4,
+        Large = 8,
     }
 }

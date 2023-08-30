@@ -12,37 +12,22 @@ namespace Pewpew.Logic.Map
         private LootTable _lootTable;
         private Items _items;
 
-        private List<Asteroid> _asteroids;
-        public LootDistributor(IGameFactory gameFactory, LootTable lootTable,Items items, List<Asteroid> asteroids)
+        public LootDistributor(IGameFactory gameFactory, LootTable lootTable,Items items, Asteroids asteroids)
         {
             _gameFactory = gameFactory;
             _lootTable = lootTable;
             _items = items;
-            _asteroids = asteroids;
-            SubscribeOnLootDroping(asteroids);
-        }
-        private void SubscribeOnLootDroping(List<Asteroid> asteroids)
-        {
-            SubscribeOnAsteroidLootDroping(asteroids);
+            asteroids.OnAsteroidLootDroping += GetLoot;
         }
 
-        private void SubscribeOnAsteroidLootDroping(List<Asteroid> asteroids)
+        private void GetLoot(AsteroidTypes entityType, Vector3 at)
         {
-            foreach(Asteroid asteroid in asteroids)
+            var randomChance = Random.Range(0f, _lootTable.SummChance[entityType]);
+            foreach (KeyValuePair<ItemInfo, float> itemInfoChance in _lootTable.Table[entityType].Chance)
             {
-                asteroid.OnLootDroping += GetLoot;
-            }
-        }
-
-        private void GetLoot(Asteroid asteroid, string entityType, Vector3 at)
-        {
-            foreach (KeyValuePair<ItemInfo,float> itemInfoChance in _lootTable.Table[entityType].Chance)
-            {
-                var randomChance = Random.Range(0, 100f);
-                if (randomChance <= itemInfoChance.Value)
+                if(randomChance <= itemInfoChance.Value)
                     _gameFactory.CreateLoot(_items.GetItemInfo(itemInfoChance.Key.Id), at);
             }
-            asteroid.OnLootDroping -= GetLoot;
         }
     }
 }

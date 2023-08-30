@@ -16,17 +16,23 @@ namespace Pewpew.Infrastructure.AssetManagment
         public const string RocketPrefabPath = "Prefabs/Ammo/Rocket";
         public const string BulletContainerPrefabPath = "Prefabs/Ammo/BULLET-CONTAINER";
 
-        public const string AsteroidPrefabPath = "Prefabs/Asteroids/Asteroid";
-        public const string AsteroidSmallPrefabPath = "Prefabs/Asteroids/Asteroid_small";
-        public const string AsteroidMediumPrefabPath = "Prefabs/Asteroids/Asteroid_medium";
-        public const string AsteroidLargePrefabPath = "Prefabs/Asteroids/Asteroid_large";
+
+        public const string AsteroidPrefabPath = "Prefabs/Asteroids/";
+        public const string AsteroidParticlesPath = "Prefabs/Asteroids/Particles/";
+        public const string AsteroidDamageParticles = "DamageParticles";
+        public const string AsteroidDestroyParticles = "DestroyParticles";
+        public const string AsteroidDefaultPrefabPath = "Asteroid";
+        public const string AsteroidCopperPrefabPath = "Asteroid_copper";
+        public const string AsteroidIronPrefabPath = "Asteroid_iron";
+
+
         public const string AsteroidContainerPrefabPath = "Prefabs/Asteroids/ASTEROID-CONTAINER";
 
-        public static readonly Dictionary<AsteroidSizes, string> AsteroidPrefabPaths = new Dictionary<AsteroidSizes, string>()
+        private static readonly Dictionary<AsteroidTypes, string> _asteroidTypes = new Dictionary<AsteroidTypes, string>()
         {
-            {AsteroidSizes.Large, AsteroidLargePrefabPath},
-            {AsteroidSizes.Medium, AsteroidMediumPrefabPath },
-            {AsteroidSizes.Small, AsteroidSmallPrefabPath },
+            {AsteroidTypes.Empty, AsteroidDefaultPrefabPath },
+            {AsteroidTypes.Copper, AsteroidCopperPrefabPath },
+            {AsteroidTypes.Iron, AsteroidIronPrefabPath },
         };
 
         public static readonly Dictionary<WeaponType, string> WeaponAmmoPrefabPaths = new Dictionary<WeaponType, string>()
@@ -35,5 +41,20 @@ namespace Pewpew.Infrastructure.AssetManagment
             {WeaponType.RocketLauncher, RocketPrefabPath },
             {WeaponType.Laser, null },
         };
+
+        public static string GetAsteroidPrefabPath(AsteroidTypes type)
+        {
+            return AsteroidPrefabPath + _asteroidTypes[type];
+        }
+
+        public static string GetAsteroidDamageParticlesPath()
+        {
+            return AsteroidParticlesPath + AsteroidDamageParticles;
+        }
+
+        public static string GetAsteroidDestroyParticlesPath()
+        {
+            return AsteroidParticlesPath + AsteroidDestroyParticles;
+        }
     }
 }

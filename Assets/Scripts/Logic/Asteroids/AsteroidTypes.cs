@@ -1,6 +1,6 @@
 public enum AsteroidTypes
 {
-    Empty = 0,
-    Copper = 3,
+    Empty = 1,
+    Copper = 2,
     Iron = 3,
 }
