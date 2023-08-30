@@ -1,5 +1,6 @@
 using Pewpew.Infrastructure.AssetManagment;
 using Pewpew.Infrastructure.Factory;
+using Pewpew.Logic.Asteroids;
 using Pewpew.Logic.Loot;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,13 @@ namespace Pewpew.Logic.Map
         private IGameFactory _gameFactory;
         private int _asteroidDensity;
         private GameObject _container;
+        private Dictionary<AsteroidTypes, float> _mineralChances;
 
-        public Generator(IGameFactory gameFactory, int asteroidsDensity)
+        public Generator(IGameFactory gameFactory, int asteroidsDensity, Dictionary<AsteroidTypes, float> mineralChances)
         {
             _gameFactory = gameFactory;
             _asteroidDensity = asteroidsDensity;
+            _mineralChances = mineralChances;
         }
 
         public List<Asteroid> GenerateAsteroids(int mapRadius)
@@ -32,14 +35,14 @@ namespace Pewpew.Logic.Map
                 {
                     if (!IsCoordinateInRadius(x,y,mapRadius) || !IsCoordinateAvaliable(x,y)) //!!!
                         continue;
+                    AsteroidTypes asteroidType = GetAsteroidType(_mineralChances);
+                    var randomAsteroidSize = UnityEngine.Random.Range(0, 100f);
 
-                    var pointAsteroidScale = UnityEngine.Random.Range(0, 100f);
-
-                    foreach(KeyValuePair<AsteroidTypes,float> type in AssetLevels.AsteroidSizes)
+                    foreach(KeyValuePair<AsteroidSizes,float> size in AssetLevels.AsteroidSizes)
                     {
-                        if(pointAsteroidScale >= type.Value)
+                        if(randomAsteroidSize >= size.Value)
                         {
-                            var asteroid = CreateAsteroid(at: (x, y), type.Key, _container.transform);
+                            var asteroid = CreateAsteroid(at: (x, y), asteroidType, size.Key, _container.transform);
                             if (asteroid != null)
                                 asteroids.Add(asteroid);
                             break;
@@ -50,15 +53,33 @@ namespace Pewpew.Logic.Map
             return asteroids;
         }
 
-        private Asteroid CreateAsteroid((int x,int y) at, AsteroidTypes type, Transform parent)
+        private Asteroid CreateAsteroid((int x,int y) at, AsteroidTypes type, AsteroidSizes size, Transform parent)
         {
             var delta = Convert.ToInt32(type);
             if (IsPlaceAvaliable(at, delta))
             {
                 PlaceAsteroid(at, delta);
-                return _gameFactory.CreateAsteroid<Asteroid>(new Vector3(at.x, 0, at.y), Quaternion.Euler(new Vector3(UnityEngine.Random.Range(0,359), UnityEngine.Random.Range(0,359), UnityEngine.Random.Range(0,359))), type, parent);
+                return _gameFactory.CreateAsteroid<Asteroid>(new Vector3(at.x, 0, at.y), Quaternion.Euler(new Vector3(UnityEngine.Random.Range(0,359), UnityEngine.Random.Range(0,359), UnityEngine.Random.Range(0,359))), type, size, parent);
             }
             return null;
+        }
+
+        private AsteroidTypes GetAsteroidType(Dictionary<AsteroidTypes, float> chances)
+        {
+            AsteroidTypes asteroidType = AsteroidTypes.Empty;
+            var currentChance = 0f;
+            var randomChance = UnityEngine.Random.Range(0, 100f);
+            foreach (KeyValuePair<AsteroidTypes, float> type in chances)
+            {
+                if (randomChance < type.Value + currentChance && randomChance >= currentChance)
+                {
+                    asteroidType = type.Key;
+                    break;
+                }
+                currentChance += type.Value;
+            }
+
+            return asteroidType;
         }
 
         private bool IsPlaceAvaliable((int x, int y) at, int delta)

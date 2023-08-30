@@ -1,5 +1,6 @@
 ﻿using Pewpew.Infrastructure.Services;
 using Pewpew.Infrastructure.Services.Inventory;
+using Pewpew.Logic.Asteroids;
 using Pewpew.Logic.Inventory;
 using System.Collections.Generic;
 
@@ -7,7 +8,7 @@ namespace Pewpew.Logic.Loot
 {
     public class LootTable
     {
-        public Dictionary<string, Drop> Table { get; private set; }
+        public Dictionary<AsteroidTypes, Drop> Table { get; private set; }
 
         private Items _itemsInfo;
 
@@ -16,10 +17,10 @@ namespace Pewpew.Logic.Loot
         {
             _itemsInfoService = AllServices.Container.Single<IItemsInfoService>();
             _itemsInfo = _itemsInfoService.Items;
-            Table = new Dictionary<string, Drop>();
+            Table = new Dictionary<AsteroidTypes, Drop>();
         }
 
-        public void Add(string entity, Drop chancesToDrop)
+        public void Add(AsteroidTypes entity, Drop chancesToDrop)
         {
             if (Table.ContainsKey(entity))
                 Replace(entity, chancesToDrop);
@@ -27,7 +28,7 @@ namespace Pewpew.Logic.Loot
                 Table.Add(entity, chancesToDrop);
         }
 
-        public void Add(string entity, ItemInfo info, float chance)
+        public void Add(AsteroidTypes entity, ItemInfo info, float chance)
         {
             if (Table.ContainsKey(entity))
             {
@@ -41,7 +42,7 @@ namespace Pewpew.Logic.Loot
             }
         }
 
-        public void Add(string entity, int itemId, float chance)
+        public void Add(AsteroidTypes entity, int itemId, float chance)
         {
             if (Table.ContainsKey(entity))
             {
@@ -55,7 +56,7 @@ namespace Pewpew.Logic.Loot
             }
         }
 
-        private void Replace(string entity, Drop chancesToDrop)
+        private void Replace(AsteroidTypes entity, Drop chancesToDrop)
         {
             Table[entity] = chancesToDrop;
         }

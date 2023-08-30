@@ -1,10 +1,11 @@
+using Pewpew.Logic.Asteroids;
 using System;
 using System.Collections;
 using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    public event Action<Asteroid, string, Vector3> OnLootDroping; 
+    public event Action<Asteroid, AsteroidTypes, Vector3> OnLootDroping; 
 
     [SerializeField]
     private MeshRenderer MeshRenderer;
@@ -21,7 +22,8 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     [Range(0, 5)]
     private int Health;
-    protected string _type = "Asteroid";
+    [SerializeField]
+    private AsteroidTypes Type;
 
     public AsteroidRotator Rotator { get; private set; }
     public RendererSwitch Switch { get; private set; }
@@ -64,7 +66,7 @@ public class Asteroid : MonoBehaviour
 
     public void DropLoot()
     {
-        OnLootDroping?.Invoke(this, _type, transform.position);
+        OnLootDroping?.Invoke(this, Type, transform.position);
     }
 
     private void Awake()

@@ -1,4 +1,5 @@
 ﻿using Pewpew.Infrastructure.Factory;
+using Pewpew.Logic.Asteroids;
 using Pewpew.Logic.Inventory;
 using Pewpew.Logic.Loot;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace Pewpew.Logic.Map
             }
         }
 
-        private void GetLoot(Asteroid asteroid, string entityType, Vector3 at)
+        private void GetLoot(Asteroid asteroid, AsteroidTypes entityType, Vector3 at)
         {
             foreach (KeyValuePair<ItemInfo,float> itemInfoChance in _lootTable.Table[entityType].Chance)
             {
